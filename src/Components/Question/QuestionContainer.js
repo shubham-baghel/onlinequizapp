@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
-import Question from "./Question";
-import Options from "./Options";
 import QuestionCard from './QuestionCard';
 
 class QuestionContainer extends Component {
 
-    listQuestions = new Array();
+    listQuestions = [];
 
     data = [{
-        question : "Who is PM of India",
+        question : "Who is the PM of India",
         options : [
             "Rahul parihar",
             "Narendra Kumawat",
@@ -16,20 +14,20 @@ class QuestionContainer extends Component {
         ]
     },
     {
-        question : "Who is CM of India",
+        question : "Who is the CM of MP",
         options : [
             "ChoduMal",
-            "Narendra Kumawat",
-            "Narendra Modi"
+            "Gandu",
+            "Shivraj"
         ]
     }]
 
     render() {
         return (
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="container-fluid" id="react-workspace">
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-sm-12">
+                        <div className="container-fluid" id="react-workspace">
                             { this.data.map((val, i) => {return (<QuestionCard question = {val} /> )})}
                         </div>
                     </div>

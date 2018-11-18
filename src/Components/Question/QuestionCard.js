@@ -3,11 +3,6 @@ import Question from "./Question";
 import Options from "./Options";
 
 class QuestionCard extends Component {
-    constructor(props){
-        super(props);
-
-    }
-
     render() {
         return (
             <div className="container-fluid" id="react-workspace">
