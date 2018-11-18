@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 class Header extends Component {
     render() {
         return (
+            <header>
             <div className="container-fluid">
                 <div className="row border-bottom">
                     <div className="col-sm-1">
@@ -33,8 +34,9 @@ class Header extends Component {
                     </div>
                 </div>
             </div>
+            </header>
         )
     }
 }
 
-export { Header };
+export default Header;

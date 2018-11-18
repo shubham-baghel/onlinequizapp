@@ -26,12 +26,15 @@ class QuestionContainer extends Component {
 
     render() {
         return (
-            
-             this.data.map((val, i) => {
-                return (<QuestionCard question = {val} /> )
-            
-            })
-                       
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="container-fluid" id="react-workspace">
+                            { this.data.map((val, i) => {return (<QuestionCard question = {val} /> )})}
+                        </div>
+                    </div>
+                </div>
+             </div>             
         )
     }
 }
