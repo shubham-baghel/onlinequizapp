@@ -5,6 +5,8 @@ import QuestionContainer from './Components/Question/QuestionContainer';
 import Header from './Components/Layout/Header'
 import Footer from './Components/Layout/Footer'
 import LeftMenu from './Components/Layout/LeftMenu'
+import Routing from './Components/Routing';
+
 
 class App extends Component {
   render() {
@@ -12,7 +14,7 @@ class App extends Component {
       <div className="App">
         <Header/>
         <LeftMenu/>
-        <QuestionContainer/>
+        <Routing/>
         <Footer/>
       </div>
      

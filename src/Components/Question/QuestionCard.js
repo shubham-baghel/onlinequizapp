@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Question from "./Question";
 import Options from "./Options";
 
@@ -9,8 +9,11 @@ class QuestionCard extends Component {
                 <div className="row mb-2 mt-2">
                     <div className="col-sm-12">
                         <div className="card">
-                            <Question question = {this.props.question.question} />
-                            <Options options = {this.props.question.options} />
+                            <Question question={this.props.question.question} />
+                            <Options
+                                responses={this.props.responses}
+                                options={this.props.question.options}
+                                onOptionSelect={this.props.onOptionSelect} />
                         </div>
                     </div>
                 </div>
