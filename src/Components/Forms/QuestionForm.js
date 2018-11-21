@@ -130,7 +130,7 @@ export default class QuestionForm extends Component {
                                         {
                                             this.state.answers.filter((op) => op.id == val.id).length > 0 ?
                                                 (<button type="button" className="btn" onClick={() => this.onMarkAnswer(index + 1, false)}>_/</button>) :
-                                                (<button type="button" className="btn" onClick={() => this.onMarkAnswer(index + 1, true)}>&#xf058;</button>)
+                                                (<button disabled={val.o==""} type="button" className="btn" onClick={() => this.onMarkAnswer(index + 1, true)}>&#xf058;</button>)
                                         }
                                     </div>
                                 </div>
