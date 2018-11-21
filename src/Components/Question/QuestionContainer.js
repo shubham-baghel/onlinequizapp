@@ -130,18 +130,16 @@ export default class QuestionContainer extends Component {
         return (
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-sm-1">
+                    <div className="col-sm-1 mb-2 mt-2 pr-0">
                         <PreviousButton onHandleClick={this.state.index > 0 ? this.handlePrevClick : () => { }} />
                     </div>
-                    <div className="col-sm-10">
-                        <div className="container-fluid" id="react-workspace">
-                            <QuestionCard
+                    <div className="col-sm-10  mb-2 mt-2">
+                        <QuestionCard
                                 responses={this.state.userResponses[this.state.index] || []}
                                 question={this.state.currentQuestion}
                                 onOptionSelect={this.onOptionSelect} />
-                        </div>
                     </div>
-                    <div className="col-sm-1">
+                    <div className="col-sm-1 mb-2 mt-2 pl-0">
                         {
                             this.state.index < this.data.length - 1 ?
                                 (<NextButton onHandleClick={this.handleNextClick} />) :

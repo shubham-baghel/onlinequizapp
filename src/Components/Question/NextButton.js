@@ -5,6 +5,6 @@ export default class NextButton extends Component{
         super(props);
     }
     render(){
-       return  (<button type="button" className="btn btn-primary btn-sm float-right" onClick={this.props.onHandleClick}>Next</button>)
+       return  (<button type="button" className="btn h-100" onClick={this.props.onHandleClick}>&#8250;</button>)
     }
 }
