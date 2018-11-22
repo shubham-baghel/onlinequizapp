@@ -1,13 +1,16 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var models = require('../../db/models/Question');
+
+var Question = models.QuestionModel;
+var Option = models.OptionModel;
 
 var router = express.Router();
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
-var Question =require('../../db/models/Question');
-var Option=require('../../db/models/Option');
+
 
 // CREATES A NEW QUESTION
 router.post('/', function (req, res) {
@@ -33,7 +36,7 @@ router.get('/s/(:arr)*', function (req, res) {
     var params= req.params[0].split('/');
     var paramsArray = [req.params.arr.concat(params[0])].concat(params.slice(1,params.length));
 
-    Question.find({subject:{ $in: paramsArray }}, 
+    Question.find({}, 
         function (err, questions) {
             if (err) return res.status(500).send("Error :"+JSON.stringify(err));
             res.status(200).send(questions);

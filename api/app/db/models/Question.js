@@ -1,12 +1,24 @@
-var mongoose = require('mongoose');  
-var Option = require('./Option');
+const mongoose = require('mongoose');  
+
+const { Model, Schema } = mongoose;
+
+var OptionSchema = new Schema({
+  id: Number,
+  o: String
+});
+
 var QuestionSchema = new mongoose.Schema({ 
   subject:String, 
   question: String,
-  answers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Option'}],
-  options: [{type: mongoose.Schema.Types.ObjectId, ref: 'Option'}],
+  answers: [OptionSchema],
+  options: [OptionSchema],
   tags:[String]
 });
-mongoose.model('Question', QuestionSchema);
 
-module.exports = mongoose.model('Question');
+var Question = mongoose.model('Question', QuestionSchema);
+var Option = mongoose.model('Option', OptionSchema);
+
+module.exports = {
+  QuestionModel : Question,
+  OptionModel : Option
+}
