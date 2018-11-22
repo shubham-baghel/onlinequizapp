@@ -1,9 +1,10 @@
+'use strict';
 import React, { Component } from 'react'
 import QuestionCard from './QuestionCard';
-import Question from './Question';
 import PreviousButton from './PreviousButton';
 import NextButton from './NextButton';
 import FinishButton from './FinishButton';
+import QuestionService from '../../Services/QuizService/QuestionService';
 
 export default class QuestionContainer extends Component {
 
@@ -13,20 +14,22 @@ export default class QuestionContainer extends Component {
         this.handlePrevClick = this.handlePrevClick.bind(this);
         this.handleFinishClick = this.handleFinishClick.bind(this);
         this.onOptionSelect = this.onOptionSelect.bind(this);
+        this.questionService = new QuestionService();
         this.state = {
             index: 0,
-            quiz: this.data,
+            quiz: {},
             isNext: true,
             isPrev: false,
-            currentQuestion: this.data[0],
-            userResponses: {}
+            currentQuestion: {},
+            userResponses: {},
+            fetching : true
         };
     }
 
     handleNextClick(e) {
         this.setState(prevState => {
             return {
-                index: prevState.index + 1, currentQuestion: this.data[prevState.index + 1]
+                index: prevState.index + 1, currentQuestion: this.state.quiz[prevState.index + 1]
             }
         });
     }
@@ -34,7 +37,7 @@ export default class QuestionContainer extends Component {
     handlePrevClick() {
         this.setState(prevState => {
             return {
-                index: prevState.index - 1, currentQuestion: this.data[prevState.index - 1]
+                index: prevState.index - 1, currentQuestion: this.state.quiz[prevState.index - 1]
             }
         });
     }
@@ -62,71 +65,25 @@ export default class QuestionContainer extends Component {
         this.setState({ userResponses: newResponses });
     }
 
-    data = [{
-        question: "Who is the PM of India",
-        options: [
-            {
-                "id": 1,
-                "o": "Arun Jaitley"
-            },
-            {
-                "id": 2,
-                "o": "Y"
-            },
-            {
-                "id": 3,
-                "o": "Z"
-            }
-        ],
-        answers: [
-            1
-        ]
-    },
-    {
-        question: "Who is the CM of MP",
-        options: [
-            {
-                "id": 1,
-                "o": "Arun Jaitley"
-            },
-            {
-                "id": 2,
-                "o": "Y"
-            },
-            {
-                "id": 3,
-                "o": "Z"
-            }
-        ],
-        answers: [
-            1,2
-        ]
-    },
-    {
-        question: "Who is the CM of Rajasthan",
-        options: [
-            {
-                "id": 1,
-                "o": "Arun Jaitley"
-            },
-            {
-                "id": 2,
-                "o": "Y"
-            },
-            {
-                "id": 3,
-                "o": "Z"
-            }
-        ],
-        answers: [
-            1
-        ]
-    }]
+    componentWillMount = function () {
+        debugger;
+        this.setState({ fetching: true })
+        this.questionService.getQuestionsBySubject("/gk")
+            .then(res => {
+                console.log(res);
+                this.setState({ quiz: res, currentQuestion: res[0], fetching: false });
+            })
+            .catch(err => {
+                console.log(err);
+            });
 
-
-
+    }
 
     render() {
+        if (this.state.fetching) {
+            return <div>Loading...</div>;
+        }
+
         return (
             <div className="container-fluid">
                 <div className="row">
@@ -141,7 +98,7 @@ export default class QuestionContainer extends Component {
                     </div>
                     <div className="col-sm-1 mb-2 mt-2 pl-0">
                         {
-                            this.state.index < this.data.length - 1 ?
+                            this.state.index < this.state.quiz.length - 1 ?
                                 (<NextButton onHandleClick={this.handleNextClick} />) :
                                 (<FinishButton onHandleClick={this.handleFinishClick} />)
                         }

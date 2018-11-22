@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import QuestionForm from './QuestionForm';
+import QuestionService from '../../Services/QuizService/QuestionService';
 
 export default class QuestionFormContainer extends Component {
     constructor(props) {
         super(props);
         this.onHandleFormSubmit=this.onHandleFormSubmit.bind(this);
+        this.questionService = new QuestionService();
     }
 
     onHandleFormSubmit(questionFormData){
-        //Add Question to API
-        debugger;
+        this.questionService.postQuestion(questionFormData);
     }
 
     render() {

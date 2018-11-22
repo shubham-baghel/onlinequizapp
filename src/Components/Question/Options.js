@@ -11,7 +11,7 @@ class Options extends Component {
             <div className="card-body">
                 <ul className="list-group">
                 {
-                    this.props.options.map((element,i) => {debugger;
+                    this.props.options.map((element,i) => {
                         var responded= responses.includes(element.id);
                         return(<Option clicked={responded} key={i} option = {element} onOptionSelect = {this.props.onOptionSelect}/>)
                     })
