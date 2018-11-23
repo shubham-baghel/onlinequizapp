@@ -34,15 +34,14 @@ export default class QuestionForm extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        if(!(this.state.answers.length==0))
-        {
+        if (!(this.state.answers.length == 0)) {
             this.props.onFormSubmit({
                 _id: this.state._id,
-                question: this.state.question||'',
-                options: this.state.options||[],
-                answers: this.state.answers||[],
-                tags: this.state.tags||[],
-                subject: this.state.subject||''
+                question: this.state.question || '',
+                options: this.state.options || [],
+                answers: this.state.answers || [],
+                tags: this.state.tags || [],
+                subject: this.state.subject || ''
             });
         }
     }
@@ -50,9 +49,9 @@ export default class QuestionForm extends Component {
     onMarkAnswer(id, mark) {
         let ans = Object.assign(this.state.answers || []);
         if (mark) {
-             if(this.state.answers.filter((o) => { return o.id == parseInt(id); }).length==0){
+            if (this.state.answers.filter((o) => { return o.id == parseInt(id); }).length == 0) {
                 ans.push({ id: id });
-             }
+            }
         } else {
             ans = ans.filter((v) => v.id != id);
         }
@@ -94,14 +93,14 @@ export default class QuestionForm extends Component {
     }
 
     onFormInputTagChange(e) {
-        if(e.key=="Enter" || e.key==" "){
+        if (e.key == "Enter" || e.key == " ") {
             let tval = e.target.value;
-            tval=(tval||"").trim();
-            if(tval!=""){
+            tval = (tval || "").trim();
+            if (tval != "") {
                 let tags = Object.assign(this.state.tags || []);
                 tags.push(tval);
                 this.setState({ tags: tags });
-                e.currentTarget.value="";
+                e.currentTarget.value = "";
                 e.preventDefault();
             }
         }
@@ -112,6 +111,9 @@ export default class QuestionForm extends Component {
         let newOptions = Object.assign(this.state.options);
         newOptions.filter((o) => o.id == id)[0].o = op;
         this.setState({ options: newOptions });
+        if ((op || '').trim() == '') {
+            this.onMarkAnswer(id, false);
+        }
     }
 
     render() {
@@ -139,13 +141,15 @@ export default class QuestionForm extends Component {
                                     <div className="col-sm-1">
                                         {
                                             index == this.state.minoptions - 1 ?
-                                                (<button title="add more options" type="button" className="btn" onClick={() => this.onAddMoreOption(this.state.options.length + 1)}>+</button>)
+                                                (<button title="add more options" type="button" className="btn btn-sm btn-light ml-3" onClick={() => this.onAddMoreOption(this.state.options.length + 1)}>
+                                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>)
                                                 : ('')
 
                                         }
                                         {
                                             index > this.state.minoptions - 1 ?
-                                                (<button title="remove this option" type="button" className="btn" onClick={() => this.onRemoveOption(index + 1)}>-</button>)
+                                                (<button title="remove this option" type="button" className="btn btn-sm btn-light ml-3" onClick={() => this.onRemoveOption(index + 1)}>
+                                                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>)
                                                 : ('')
 
                                         }
@@ -156,8 +160,12 @@ export default class QuestionForm extends Component {
                                     <div className="col-sm-1">
                                         {
                                             this.state.answers.filter((op) => op.id == val.id).length > 0 ?
-                                                (<button type="button" className="btn glyphicon-check" onClick={() => this.onMarkAnswer(index + 1, false)}></button>) :
-                                                (<button disabled={val.o == ""} type="button" className="btn glyphicon-unchecked" onClick={() => this.onMarkAnswer(index + 1, true)}></button>)
+                                                (<button type="button" className="btn btn-sm btn-light" onClick={() => this.onMarkAnswer(index + 1, false)}>
+                                                    <span class="glyphicon glyphicon-saved" aria-hidden="true"></span>
+                                                </button>) :
+                                                (<button disabled={val.o == ""} type="button" className="btn btn-sm btn-light" onClick={() => this.onMarkAnswer(index + 1, true)}>
+                                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                                </button>)
                                         }
                                     </div>
                                 </div>
@@ -184,22 +192,23 @@ export default class QuestionForm extends Component {
                             <input onKeyPress={this.onFormInputTagChange} className="form-control" id="tags" placeholder="Enter tag here" />
                         </div>
                     </div>
-                    {   
-                        (this.state.tags||[]).length > 0?
-                        (<div className="form-group row">
-                            <div className="col-sm-1"></div>
-                            <div className="col-sm-1">
-                            </div>
-                            <div className="col-sm-1"></div>
-                            <div className="col-sm-9 text-left">
-                            {
-                                (this.state.tags||[]).map((val,index)=>{
-                                    return ( <div key={index} className="label label-default mr-2 pr-2 card">
-                                                 <span>{val}</span>
-                                             </div>)})
-                            }
-                            </div>
-                        </div>):''
+                    {
+                        (this.state.tags || []).length > 0 ?
+                            (<div className="form-group row">
+                                <div className="col-sm-1"></div>
+                                <div className="col-sm-1">
+                                </div>
+                                <div className="col-sm-1"></div>
+                                <div className="col-sm-9 text-left">
+                                    {
+                                        (this.state.tags || []).map((val, index) => {
+                                            return (<div key={index} className="label label-default mr-2 pr-2 card">
+                                                <span>{val}</span>
+                                            </div>)
+                                        })
+                                    }
+                                </div>
+                            </div>) : ''
                     }
                     <div className="form-group row">
                         <div className="col-sm-1"></div>
@@ -207,7 +216,7 @@ export default class QuestionForm extends Component {
                             <button type="submit" className="btn btn-primary">Submit</button>
                         </div>
                     </div>
-                    
+
                 </form>
             </div>
         )
