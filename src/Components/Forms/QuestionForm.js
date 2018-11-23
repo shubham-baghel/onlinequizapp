@@ -11,26 +11,38 @@ export default class QuestionForm extends Component {
         this.onFormInputOptionChange = this.onFormInputOptionChange.bind(this);
         this.onFormInputSubjectChange = this.onFormInputSubjectChange.bind(this);
         this.onFormInputTagChange = this.onFormInputTagChange.bind(this);
-        
-        let questionModel=props.questionModel||{};
+        this.handleonAddNewQuestion = this.handleonAddNewQuestion.bind(this);
+        this.initializeForm = this.initializeForm.bind(this);
+
+        this.initializeForm(props.questionModel || {}, props.minoptions, props.maxOptions, true);
+    }
+
+    initializeForm(questionModel, minoptions, maxOptions, initial) {
+        questionModel = questionModel || {};
         let options = questionModel.options || [];
-        let minoptions = (options.length || props.minoptions) || 2;
+        minoptions = (options.length || minoptions) || 2;
 
         if (options.length == 0) {
             for (let i = 1; i <= minoptions; i++) {
                 options.push({ id: i, o: '' });
             }
         }
-        this.state={
+        let stateObject = {
             _id: questionModel._id || '',
             question: questionModel.question || '',
             options: options,
             answers: questionModel.answers || [],
             minoptions: minoptions,
-            maxOptions: props.maxOptions || 5,
+            maxOptions: maxOptions || 5,
             subject: questionModel.subject || 'General',
             tags: questionModel.tags || []
         };
+        if (initial||false) {
+            this.state = stateObject;
+        } else {
+            this.setState(stateObject);
+        }
+
     }
 
     handleSubmit(e) {
@@ -45,6 +57,12 @@ export default class QuestionForm extends Component {
                 subject: this.state.subject || ''
             });
         }
+    }
+
+    handleonAddNewQuestion(e) {
+        e.preventDefault();
+        this.initializeForm();
+        this.props.onAddNewQuestion();
     }
 
     onMarkAnswer(id, mark) {
@@ -128,7 +146,7 @@ export default class QuestionForm extends Component {
                         </div>
                         <div className="col-sm-1"></div>
                         <div className="col-sm-8">
-                            <textarea readOnly={this.props.viewMode||false} required={true} onChange={this.onFormInputQuestionChange} className="form-control" id="question" value={this.state.question} placeholder="Enter question here" />
+                            <textarea readOnly={this.props.viewMode || false} required={true} onChange={this.onFormInputQuestionChange} className="form-control" id="question" value={this.state.question} placeholder="Enter question here" />
                         </div>
                     </div>
                     {
@@ -142,29 +160,29 @@ export default class QuestionForm extends Component {
                                     <div className="col-sm-1">
                                         {
                                             index == this.state.minoptions - 1 ?
-                                                (<button disabled={this.props.viewMode||false} title="add more options" type="button" className="btn btn-sm btn-light ml-3" onClick={() => this.onAddMoreOption(this.state.options.length + 1)}>
+                                                (<button disabled={this.props.viewMode || false} title="add more options" type="button" className="btn btn-sm btn-light ml-3" onClick={() => this.onAddMoreOption(this.state.options.length + 1)}>
                                                     <span className="glyphicon glyphicon-plus" aria-hidden="true"></span></button>)
                                                 : ('')
 
                                         }
                                         {
                                             index > this.state.minoptions - 1 ?
-                                                (<button disabled={this.props.viewMode||false} title="remove this option" type="button" className="btn btn-sm btn-light ml-3" onClick={() => this.onRemoveOption(index + 1)}>
+                                                (<button disabled={this.props.viewMode || false} title="remove this option" type="button" className="btn btn-sm btn-light ml-3" onClick={() => this.onRemoveOption(index + 1)}>
                                                     <span className="glyphicon glyphicon-minus" aria-hidden="true"></span></button>)
                                                 : ('')
 
                                         }
                                     </div>
                                     <div className="col-sm-8">
-                                        <input disabled={this.props.viewMode||false} required={true} value={val.o} onChange={(e) => this.onFormInputOptionChange(e, index + 1)} type="text" className="form-control" id={"option" + index + 1} placeholder="Enter option here" />
+                                        <input disabled={this.props.viewMode || false} required={true} value={val.o} onChange={(e) => this.onFormInputOptionChange(e, index + 1)} type="text" className="form-control" id={"option" + index + 1} placeholder="Enter option here" />
                                     </div>
                                     <div className="col-sm-1">
                                         {
                                             this.state.answers.filter((op) => op.id == val.id).length > 0 ?
-                                                (<button disabled={this.props.viewMode||false} type="button" className="btn btn-sm btn-light" onClick={() => this.onMarkAnswer(index + 1, false)}>
+                                                (<button disabled={this.props.viewMode || false} type="button" className="btn btn-sm btn-light" onClick={() => this.onMarkAnswer(index + 1, false)}>
                                                     <span className="glyphicon glyphicon-saved" aria-hidden="true"></span>
                                                 </button>) :
-                                                (<button disabled={(this.props.viewMode||false)||val.o == ""} type="button" className="btn btn-sm btn-light" onClick={() => this.onMarkAnswer(index + 1, true)}>
+                                                (<button disabled={(this.props.viewMode || false) || val.o == ""} type="button" className="btn btn-sm btn-light" onClick={() => this.onMarkAnswer(index + 1, true)}>
                                                     <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                                 </button>)
                                         }
@@ -180,7 +198,7 @@ export default class QuestionForm extends Component {
                         </div>
                         <div className="col-sm-1"></div>
                         <div className="col-sm-8">
-                            <input disabled={this.props.viewMode||false} required={true} onChange={this.onFormInputSubjectChange} className="form-control" id="subject" value={this.state.subject} placeholder="Enter subject here" />
+                            <input disabled={this.props.viewMode || false} required={true} onChange={this.onFormInputSubjectChange} className="form-control" id="subject" value={this.state.subject} placeholder="Enter subject here" />
                         </div>
                     </div>
                     <div className="form-group row">
@@ -190,7 +208,7 @@ export default class QuestionForm extends Component {
                         </div>
                         <div className="col-sm-1"></div>
                         <div className="col-sm-8">
-                            <input disabled={this.props.viewMode||false} onKeyPress={this.onFormInputTagChange} className="form-control" id="tags" placeholder="Enter tag here" />
+                            <input disabled={this.props.viewMode || false} onKeyPress={this.onFormInputTagChange} className="form-control" id="tags" placeholder="Enter tag here" />
                         </div>
                     </div>
                     {
@@ -215,9 +233,9 @@ export default class QuestionForm extends Component {
                         <div className="col-sm-1"></div>
                         <div className="col-sm-1">
                             {
-                                (this.props.viewMode||false)?
-                                (<button type="button" onClick={this.props.onAddNewQuestion} className="btn btn-info">Add More</button>):
-                                (<button type="submit" className="btn btn-primary">Submit</button>)
+                                (this.props.viewMode || false) ?
+                                    (<button id="addnew" type="button" onClick={this.handleonAddNewQuestion} className="btn btn-info">Add More</button>) :
+                                    (<button id="sunmit" type="submit" className="btn btn-primary">Submit</button>)
                             }
                         </div>
                     </div>
