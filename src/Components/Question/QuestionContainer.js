@@ -66,7 +66,6 @@ export default class QuestionContainer extends Component {
     }
 
     componentWillMount = function () {
-        debugger;
         this.setState({ fetching: true })
         this.questionService.getQuestionsBySubject("/gk")
             .then(res => {
