@@ -5,6 +5,6 @@ export default class FinishButton extends Component{
         super(props);
     }
     render(){
-        return(<button type="button" className="btn btn-info h-100" onClick={this.props.onHandleClick}>&#8250;</button>)
+        return(<button type="button" className="btn btn-info h-100 btn-sm btn-light" onClick={this.props.onHandleClick}><span className='glyphicon glyphicon-forward'></span></button>)
     }
 }
