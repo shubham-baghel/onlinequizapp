@@ -9,7 +9,8 @@ export default class QuestionForm extends Component {
         this.onRemoveOption = this.onRemoveOption.bind(this);
         this.onFormInputQuestionChange = this.onFormInputQuestionChange.bind(this);
         this.onFormInputOptionChange = this.onFormInputOptionChange.bind(this);
-
+        this.onFormInputSubjectChange = this.onFormInputSubjectChange.bind(this);
+        this.onFormInputTagChange = this.onFormInputTagChange.bind(this);
 
         let options = props.options || [];
         let minoptions = (options.length || props.minoptions) || 2;
@@ -20,31 +21,38 @@ export default class QuestionForm extends Component {
             }
         }
         this.state = {
-            _id:props._id||'',
+            _id: props._id || '',
             question: props.question || '',
             options: options,
             answers: props.answers || [],
             minoptions: minoptions,
-            maxOptions: props.maxOptions || 5
+            maxOptions: props.maxOptions || 5,
+            subject: props.subject || 'General',
+            tags: props.tags || []
         }
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.onFormSubmit({
-            _id:this.state._id,
-            question:this.state.question,
-            options:this.state.options,
-            answers:this.state.answers,
-            tags:[],
-            subject:"gk"//From Drop down future
-        });
+        if(!(this.state.answers.length==0))
+        {
+            this.props.onFormSubmit({
+                _id: this.state._id,
+                question: this.state.question||'',
+                options: this.state.options||[],
+                answers: this.state.answers||[],
+                tags: this.state.tags||[],
+                subject: this.state.subject||''
+            });
+        }
     }
 
     onMarkAnswer(id, mark) {
         let ans = Object.assign(this.state.answers || []);
         if (mark) {
-            ans.push({ id: id });
+             if(this.state.answers.filter((o) => { return o.id == parseInt(id); }).length==0){
+                ans.push({ id: id });
+             }
         } else {
             ans = ans.filter((v) => v.id != id);
         }
@@ -80,6 +88,25 @@ export default class QuestionForm extends Component {
         this.setState({ question: q });
     }
 
+    onFormInputSubjectChange(e) {
+        let s = e.target.value;
+        this.setState({ subject: s });
+    }
+
+    onFormInputTagChange(e) {
+        if(e.key=="Enter" || e.key==" "){
+            let tval = e.target.value;
+            tval=(tval||"").trim();
+            if(tval!=""){
+                let tags = Object.assign(this.state.tags || []);
+                tags.push(tval);
+                this.setState({ tags: tags });
+                e.currentTarget.value="";
+                e.preventDefault();
+            }
+        }
+    }
+
     onFormInputOptionChange(e, id) {
         let op = e.target.value;
         let newOptions = Object.assign(this.state.options);
@@ -94,11 +121,11 @@ export default class QuestionForm extends Component {
                     <div className="form-group row">
                         <div className="col-sm-1"></div>
                         <div className="col-sm-1">
-                            <label htmlFor="question">Question</label>
+                            <label className='label label-default' htmlFor="question">Question</label>
                         </div>
                         <div className="col-sm-1"></div>
-                        <div className="col-sm-9">
-                            <textarea onChange={this.onFormInputQuestionChange} className="form-control" id="question" value={this.state.question} placeholder="Enter question here" />
+                        <div className="col-sm-8">
+                            <textarea required='true' onChange={this.onFormInputQuestionChange} className="form-control" id="question" value={this.state.question} placeholder="Enter question here" />
                         </div>
                     </div>
                     {
@@ -107,7 +134,7 @@ export default class QuestionForm extends Component {
                                 <div className="form-group row" key={index + 1}>
                                     <div className="col-sm-1"></div>
                                     <div className="col-sm-1">
-                                        <label htmlFor={"option" + index + 1}> Option {index + 1} </label>
+                                        <label className='label label-default' htmlFor={"option" + index + 1}> Option {index + 1} </label>
                                     </div>
                                     <div className="col-sm-1">
                                         {
@@ -124,13 +151,13 @@ export default class QuestionForm extends Component {
                                         }
                                     </div>
                                     <div className="col-sm-8">
-                                        <input value={val.o} onChange={(e) => this.onFormInputOptionChange(e, index + 1)} type="text" className="form-control" id={"option" + index + 1} placeholder="Enter option here" />
+                                        <input required='true' value={val.o} onChange={(e) => this.onFormInputOptionChange(e, index + 1)} type="text" className="form-control" id={"option" + index + 1} placeholder="Enter option here" />
                                     </div>
                                     <div className="col-sm-1">
                                         {
                                             this.state.answers.filter((op) => op.id == val.id).length > 0 ?
-                                                (<button type="button" className="btn" onClick={() => this.onMarkAnswer(index + 1, false)}>_/</button>) :
-                                                (<button disabled={val.o==""} type="button" className="btn" onClick={() => this.onMarkAnswer(index + 1, true)}>&#xf058;</button>)
+                                                (<button type="button" className="btn glyphicon-check" onClick={() => this.onMarkAnswer(index + 1, false)}></button>) :
+                                                (<button disabled={val.o == ""} type="button" className="btn glyphicon-unchecked" onClick={() => this.onMarkAnswer(index + 1, true)}></button>)
                                         }
                                     </div>
                                 </div>
@@ -140,9 +167,47 @@ export default class QuestionForm extends Component {
                     <div className="form-group row">
                         <div className="col-sm-1"></div>
                         <div className="col-sm-1">
+                            <label className='label label-default' htmlFor="subject">Subject</label>
+                        </div>
+                        <div className="col-sm-1"></div>
+                        <div className="col-sm-8">
+                            <input required='true' onChange={this.onFormInputSubjectChange} className="form-control" id="subject" value={this.state.subject} placeholder="Enter subject here" />
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <div className="col-sm-1"></div>
+                        <div className="col-sm-1">
+                            <label className='label label-default' htmlFor="tags">Tags</label>
+                        </div>
+                        <div className="col-sm-1"></div>
+                        <div className="col-sm-8">
+                            <input onKeyPress={this.onFormInputTagChange} className="form-control" id="tags" placeholder="Enter tag here" />
+                        </div>
+                    </div>
+                    {   
+                        (this.state.tags||[]).length > 0?
+                        (<div className="form-group row">
+                            <div className="col-sm-1"></div>
+                            <div className="col-sm-1">
+                            </div>
+                            <div className="col-sm-1"></div>
+                            <div className="col-sm-9 text-left">
+                            {
+                                (this.state.tags||[]).map((val,index)=>{
+                                    return ( <div key={index} className="label label-default mr-2 pr-2 card">
+                                                 <span>{val}</span>
+                                             </div>)})
+                            }
+                            </div>
+                        </div>):''
+                    }
+                    <div className="form-group row">
+                        <div className="col-sm-1"></div>
+                        <div className="col-sm-1">
                             <button type="submit" className="btn btn-primary">Submit</button>
                         </div>
                     </div>
+                    
                 </form>
             </div>
         )

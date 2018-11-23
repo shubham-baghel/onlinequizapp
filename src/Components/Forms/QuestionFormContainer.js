@@ -16,10 +16,12 @@ export default class QuestionFormContainer extends Component {
     render() {
         return (
             <div className="container-fluid">
-                <div className="row" >
-                    <div className="col-sm-10  mb-2 mt-2">
+                <div className="row mb-2 mt-2" >
+                    <div  className='col-sm-1'></div>
+                    <div className="col-sm-10">
                         <QuestionForm maxOptions={6} minoptions={3} onFormSubmit={this.onHandleFormSubmit} />
                     </div>
+                    <div className='col-sm-1'></div>
                 </div>
             </div>
         );
