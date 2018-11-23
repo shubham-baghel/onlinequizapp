@@ -11,21 +11,24 @@ export default class QuestionFormContainer extends Component {
         this.questionService = new QuestionService();
         this.state = {
             viewMode: false,
-            questionFormData: {}
+            questionFormData: {},
+            isMsg:false,
+            message:''
         }
     }
 
     onHandleFormSubmit(questionFormData) {
         this.questionService.postQuestion(questionFormData).then(res => {
             console.log(res);
-            this.setState({ viewMode: true, questionFormData: questionFormData });
+            this.setState({isMsg:true,message:'Question added successfully.', viewMode: true, questionFormData: questionFormData });
         })
             .catch(err => {
                 console.log(err);
+                this.setState({isMsg:true,message:'Some error occured while adding question.', viewMode: false, questionFormData: questionFormData });
             });
     }
     onHandleAddNewQuestion(e) {
-        this.setState({ viewMode: false, questionFormData: {} });
+        this.setState({isMsg:false, viewMode: false, questionFormData: {} });
     }
     render() {
         return (
@@ -38,6 +41,8 @@ export default class QuestionFormContainer extends Component {
                             onAddNewQuestion={this.onHandleAddNewQuestion}
                             viewMode={this.state.viewMode}
                             onFormSubmit={this.onHandleFormSubmit}
+                            isMsg={this.state.isMsg}
+                            message={this.state.message}
                         />
                     </div>
                     <div className='col-sm-1'></div>
