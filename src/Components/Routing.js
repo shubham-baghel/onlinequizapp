@@ -1,8 +1,9 @@
 import React , {Component} from 'react' 
 import { Switch, Route } from 'react-router-dom'
 import Home from './Home'
-import QuestionContainer from './Question/QuestionContainer'
+import QuizContainer from './Question/QuizContainer'
 import QuestionFormContainer from './Forms/QuestionFormContainer';
+import RevisitForm from './Question/RevisitForm';
 
 class Routing extends Component {
     render(){
@@ -10,8 +11,9 @@ class Routing extends Component {
             <main>
                 <Switch>
                     <Route exact path='/' component={Home} />
-                    <Route path='/quiz' component={QuestionContainer} />
+                    <Route exact path='/quiz' component={QuizContainer} />
                     <Route path='/q/add' component={QuestionFormContainer}/>
+                    <Route exact path='/quiz/review' component= {RevisitForm} />
                 </Switch>
             </main>
         )

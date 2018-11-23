@@ -4,7 +4,7 @@ import QuestionCard from './QuestionCard';
 import PreviousButton from './PreviousButton';
 import NextButton from './NextButton';
 import FinishButton from './FinishButton';
-import QuestionService from '../../Services/QuizService/QuestionService';
+import {Redirect} from 'react-router-dom'
 
 export default class QuestionContainer extends Component {
 
@@ -14,24 +14,30 @@ export default class QuestionContainer extends Component {
         this.handlePrevClick = this.handlePrevClick.bind(this);
         this.handleFinishClick = this.handleFinishClick.bind(this);
         this.onOptionSelect = this.onOptionSelect.bind(this);
-        this.questionService = new QuestionService();
         this.state = {
             index: 0,
-            quiz: {},
+            quiz: this.props.quizData || {},
             isNext: true,
             isPrev: false,
-            currentQuestion: {},
-            userResponses: {},
-            fetching : true
+            currentQuestion:  this.props.quizData[0] || {},
+            userResponses: this.props.userResponses || {},
+            fetching : true,
+            isFormReview : false,
         };
     }
 
     handleNextClick(e) {
+        let newResponses = Object.assign({},this.state.userResponses);
+       
+        newResponses[this.state.index] = newResponses[this.state.index] || [];
+
         this.setState(prevState => {
             return {
-                index: prevState.index + 1, currentQuestion: this.state.quiz[prevState.index + 1]
+                index: prevState.index + 1, 
+                currentQuestion: this.state.quiz[prevState.index + 1]
             }
         });
+        this.state.userResponses=newResponses;
     }
 
     handlePrevClick() {
@@ -43,7 +49,10 @@ export default class QuestionContainer extends Component {
     }
 
     handleFinishClick(e) {
-
+        let newResponses = Object.assign({}, this.state.userResponses);
+        newResponses[this.state.index] = newResponses[this.state.index] || [];
+        this.state.userResponses=newResponses;
+        this.props.onQuizRevisit(this.state.userResponses);
     }
 
     onOptionSelect(e) {
@@ -65,24 +74,8 @@ export default class QuestionContainer extends Component {
         this.setState({ userResponses: newResponses });
     }
 
-    componentWillMount = function () {
-        this.setState({ fetching: true })
-        this.questionService.getQuestionsBySubject("/gk")
-            .then(res => {
-                console.log(res);
-                this.setState({ quiz: res, currentQuestion: res[0], fetching: false });
-            })
-            .catch(err => {
-                console.log(err);
-            });
-
-    }
-
     render() {
-        if (this.state.fetching) {
-            return <div>Loading...</div>;
-        }
-
+        console.log(this.state.userResponses);
         return (
             <div className="container-fluid">
                 <div className="row">
