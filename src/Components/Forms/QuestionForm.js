@@ -35,9 +35,11 @@ export default class QuestionForm extends Component {
             minoptions: minoptions,
             maxOptions: maxOptions || 5,
             subject: questionModel.subject || 'General',
-            tags: questionModel.tags || []
+            tags: questionModel.tags || [],
+            isError: '',
+            error: false
         };
-        if (initial||false) {
+        if (initial || false) {
             this.state = stateObject;
         } else {
             this.setState(stateObject);
@@ -47,7 +49,9 @@ export default class QuestionForm extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        if (!(this.state.answers.length == 0)) {
+        if (this.state.answers.length == 0) {
+            this.setState({ isError: true, error: "Please mark at least one Option as an Answer!" });
+        } else {
             this.props.onFormSubmit({
                 _id: this.state._id,
                 question: this.state.question || '',
@@ -229,6 +233,18 @@ export default class QuestionForm extends Component {
                                 </div>
                             </div>) : ''
                     }
+                    {
+                        this.state.isError || false ?
+                            (<div className="form-group row">
+                                <div className="col-sm-1"></div>
+                                <div className="col-sm-1"></div>
+                                <div className="col-sm-1"></div>
+                                <div className="col-sm-8">
+                                   <h4> <label className='label label-danger'>{this.state.error}</label></h4>
+                                </div>
+                            </div>) : ''
+                    }
+                    {this.state.isError=false}
                     <div className="form-group row">
                         <div className="col-sm-1"></div>
                         <div className="col-sm-1">
