@@ -127,7 +127,7 @@ export default class QuestionForm extends Component {
                         </div>
                         <div className="col-sm-1"></div>
                         <div className="col-sm-8">
-                            <textarea required='true' onChange={this.onFormInputQuestionChange} className="form-control" id="question" value={this.state.question} placeholder="Enter question here" />
+                            <textarea required={true} onChange={this.onFormInputQuestionChange} className="form-control" id="question" value={this.state.question} placeholder="Enter question here" />
                         </div>
                     </div>
                     {
@@ -142,29 +142,29 @@ export default class QuestionForm extends Component {
                                         {
                                             index == this.state.minoptions - 1 ?
                                                 (<button title="add more options" type="button" className="btn btn-sm btn-light ml-3" onClick={() => this.onAddMoreOption(this.state.options.length + 1)}>
-                                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>)
+                                                    <span className="glyphicon glyphicon-plus" aria-hidden="true"></span></button>)
                                                 : ('')
 
                                         }
                                         {
                                             index > this.state.minoptions - 1 ?
                                                 (<button title="remove this option" type="button" className="btn btn-sm btn-light ml-3" onClick={() => this.onRemoveOption(index + 1)}>
-                                                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>)
+                                                    <span className="glyphicon glyphicon-minus" aria-hidden="true"></span></button>)
                                                 : ('')
 
                                         }
                                     </div>
                                     <div className="col-sm-8">
-                                        <input required='true' value={val.o} onChange={(e) => this.onFormInputOptionChange(e, index + 1)} type="text" className="form-control" id={"option" + index + 1} placeholder="Enter option here" />
+                                        <input required={true} value={val.o} onChange={(e) => this.onFormInputOptionChange(e, index + 1)} type="text" className="form-control" id={"option" + index + 1} placeholder="Enter option here" />
                                     </div>
                                     <div className="col-sm-1">
                                         {
                                             this.state.answers.filter((op) => op.id == val.id).length > 0 ?
                                                 (<button type="button" className="btn btn-sm btn-light" onClick={() => this.onMarkAnswer(index + 1, false)}>
-                                                    <span class="glyphicon glyphicon-saved" aria-hidden="true"></span>
+                                                    <span className="glyphicon glyphicon-saved" aria-hidden="true"></span>
                                                 </button>) :
                                                 (<button disabled={val.o == ""} type="button" className="btn btn-sm btn-light" onClick={() => this.onMarkAnswer(index + 1, true)}>
-                                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                                    <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                                 </button>)
                                         }
                                     </div>
@@ -179,7 +179,7 @@ export default class QuestionForm extends Component {
                         </div>
                         <div className="col-sm-1"></div>
                         <div className="col-sm-8">
-                            <input required='true' onChange={this.onFormInputSubjectChange} className="form-control" id="subject" value={this.state.subject} placeholder="Enter subject here" />
+                            <input required={true} onChange={this.onFormInputSubjectChange} className="form-control" id="subject" value={this.state.subject} placeholder="Enter subject here" />
                         </div>
                     </div>
                     <div className="form-group row">
