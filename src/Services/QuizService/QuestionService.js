@@ -7,7 +7,7 @@ export default class QuestionService {
     
     getQuestionsBySubject(subjects) {
         return request({
-            url : `/api/questions/s` + subjects,
+            url : `/api/questions/s/` + subjects,
             method: 'GET'
         });
     }
