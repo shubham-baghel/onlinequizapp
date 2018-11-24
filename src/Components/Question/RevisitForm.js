@@ -16,7 +16,7 @@ export default class RevisitForm extends Component{
                     })
                 }
                     <button className="btn btn-primary" onClick={this.props.revisitQuiz}>Revisit Quiz</button>
-                    <button className="btn btn-success">Finish Quiz</button>
+                    <button className="btn btn-success" onClick={this.props.finishQuiz} >Finish Quiz</button>
             </div>
             
         )

@@ -4,18 +4,21 @@ import QuestionContainer from './QuestionContainer'
 
 import QuestionService from '../../Services/QuizService/QuestionService';
 import RevisitForm from './RevisitForm';
+import QuizResult from './QuizResult';
 
 export default class QuizContainer extends Component {
      constructor(props){
          super(props);
          this.handleQuizRevisit = this.handleQuizRevisit.bind(this);
          this.revisitQuiz = this.revisitQuiz.bind(this);
+         this.onFinishQuiz = this.onFinishQuiz.bind(this);
         this.questionService = new QuestionService();
          this.state = {
              isFetched : false,
              quizData : {},
              isRevisit : false,
-             userResponse : {}
+             userResponse : {},
+             isFinishQuiz : false
          }
      }
 
@@ -41,11 +44,24 @@ export default class QuizContainer extends Component {
         this.setState({isRevisit : false})
     }
 
+    onFinishQuiz() {
+        this.setState({isFinishQuiz : true})
+    }
+
      render(){
-         debugger;
+        if(this.state.isFinishQuiz){
+            return (<QuizResult 
+                quizData = {this.state.quizData} 
+                userResponse = {this.state.userResponse} />
+            )
+        }
+
         if(this.state.isRevisit ){
            return ( 
-           <RevisitForm  revisitQuiz ={this.revisitQuiz} userRes = {this.state.userResponse} qCount ={this.state.quizData.length}/>
+           <RevisitForm 
+            revisitQuiz ={this.revisitQuiz} 
+            userRes = {this.state.userResponse} 
+            finishQuiz = {this.onFinishQuiz}/>
            )
         }
 

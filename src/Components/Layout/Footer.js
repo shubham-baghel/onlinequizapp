@@ -6,9 +6,9 @@ class Footer extends Component {
             <footer className="border-top">
                 <div className="row m-auto">
                     <div className="col-sm-12">
-                        <span>Posted by: Hege Refsnes</span><br />
+                        <span>Posted by: Shubham Baghel</span><br />
                         <span>Contact information: <a href="mailto:someone@example.com">
-                            someone@example.com</a>.</span>
+                            sbaghel93@outlook.com</a>.</span>
                     </div>
                 </div>
             </footer>
