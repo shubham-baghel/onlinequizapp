@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 export default class QuestionForm extends Component {
+
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -14,6 +15,9 @@ export default class QuestionForm extends Component {
         this.handleonAddNewQuestion = this.handleonAddNewQuestion.bind(this);
         this.onFormLanguageChange = this.onFormLanguageChange.bind(this);
         this.onFormQuestionLevelChange = this.onFormQuestionLevelChange.bind(this);
+        this.onSubjectRemove=this.onSubjectRemove.bind(this);
+        this.onTagRemove=this.onTagRemove.bind(this);
+
         this.initializeForm = this.initializeForm.bind(this);
 
         this.initializeForm(props.questionModel || {}, props.minoptions, props.maxOptions, true);
@@ -122,19 +126,16 @@ export default class QuestionForm extends Component {
     }
 
     onFormInputSubjectChange(e) {
-        if (e.key == "Enter" || e.key == " ") {
-            let sval = e.target.value;
-            sval = (sval || "").trim();
-            if (sval != "") {
-                let subjects = Object.assign(this.state.subjects || []);
-                if (subjects.filter((s) =>
-                    s.trim().toLowerCase() == sval.toLowerCase()).length == 0) {
-                        subjects.push(sval);
-                    this.setState({ subjects: subjects });
-                }
-                e.currentTarget.value = "";
-                e.preventDefault();
+        let sval = e.target.value;
+        sval = (sval || "").trim();
+        if (sval != "" && sval.toLowerCase()!="Select") {
+            let subjects = Object.assign(this.state.subjects || []);
+            if (subjects.filter((s) =>
+                s.trim().toLowerCase() == sval.toLowerCase()).length == 0) {
+                subjects.push(sval);
+                this.setState({ subjects: subjects });
             }
+            e.currentTarget.value = "Select";
         }
     }
 
@@ -159,7 +160,16 @@ export default class QuestionForm extends Component {
             }
         }
     }
-
+    onTagRemove(tval){
+        let tags=Object.assign(this.state.tags);
+        tags=tags.filter((t) =>t.trim().toLowerCase() != tval.toLowerCase())
+        this.setState({ tags: tags });
+    }
+    onSubjectRemove(sval){
+        let subjects=Object.assign(this.state.subjects);
+        subjects=subjects.filter((s) =>s.trim().toLowerCase() != sval.toLowerCase())
+        this.setState({ subjects: subjects });
+    }
     onFormInputOptionChange(e, id) {
         let op = e.target.value;
         let newOptions = Object.assign(this.state.options);
@@ -171,12 +181,13 @@ export default class QuestionForm extends Component {
     }
 
     render() {
+        const defaultSubjects=['Select','General','Physics','Chemistry','Mathematics']
         return (
             <div className="container-fluid">
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group row">
                         <div className="col-sm-1">
-                            <label className=''><span class="glyphicon glyphicon-hand-right"></span></label>
+                            <label className=''><span className="glyphicon glyphicon-hand-right"></span></label>
                         </div>
                         <div className="col-sm-1">
                             <label className='label label-default' htmlFor="question">Question</label>
@@ -235,7 +246,13 @@ export default class QuestionForm extends Component {
                         </div>
                         <div className="col-sm-1"></div>
                         <div className="col-sm-8">
-                            <input disabled={this.props.viewMode || false}  onKeyPress={this.onFormInputSubjectChange} className="form-control" id="subject"  placeholder="Enter subject here" />
+                        <select required={true} disabled={this.props.viewMode || false} className="form-control" id="subject" onChange={this.onFormInputSubjectChange}>
+                                {
+                                    defaultSubjects.map((val,index)=>{
+                                        return (<option key={index} value={val}>{val}</option>)
+                                    })
+                                }
+                            </select>
                         </div>
                     </div>
                     {
@@ -248,8 +265,9 @@ export default class QuestionForm extends Component {
                                 <div className="col-sm-9 text-left">
                                     {
                                         (this.state.subjects || []).map((val, index) => {
-                                            return (<div key={index} className="label label-default mr-2 pr-2 card">
-                                                <span>{val}</span>
+                                            return (<div key={index} className="label label-info mr-2 pr-2 card">
+                                                <span>{val}</span>&nbsp;&nbsp;
+                                                <span value={val} role="button" onClick={()=>this.onSubjectRemove(val)} className="glyphicon glyphicon-remove"></span>
                                             </div>)
                                         })
                                     }
@@ -276,8 +294,9 @@ export default class QuestionForm extends Component {
                                 <div className="col-sm-9 text-left">
                                     {
                                         (this.state.tags || []).map((val, index) => {
-                                            return (<div key={index} className="label label-default mr-2 pr-2 card">
-                                                <span>{val}</span>
+                                            return (<div key={index} className="label label-info mr-2 pr-2 card">
+                                                <span>{val}&nbsp;&nbsp;</span>
+                                                <span value={val} role="button" onClick={()=>this.onTagRemove(val)} className="glyphicon glyphicon-remove"></span>
                                             </div>)
                                         })
                                     }
