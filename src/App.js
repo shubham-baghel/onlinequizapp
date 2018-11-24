@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import QuestionContainer from './Components/Question/QuestionContainer';
+import QuestionContainer from './Components/Quiz/QuestionContainer';
 import Header from './Components/Layout/Header'
 import Footer from './Components/Layout/Footer'
 import LeftMenu from './Components/Layout/LeftMenu'

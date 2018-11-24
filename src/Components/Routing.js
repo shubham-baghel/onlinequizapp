@@ -1,9 +1,9 @@
 import React , {Component} from 'react' 
 import { Switch, Route } from 'react-router-dom'
 import Home from './Home'
-import QuizContainer from './Question/QuizContainer'
+import QuizContainer from './Quiz/QuizContainer'
 import QuestionFormContainer from './Forms/QuestionFormContainer';
-import RevisitForm from './Question/RevisitForm';
+import RevisitForm from './Quiz/RevisitForm';
 
 class Routing extends Component {
     render(){
