@@ -12,6 +12,8 @@ export default class QuestionForm extends Component {
         this.onFormInputSubjectChange = this.onFormInputSubjectChange.bind(this);
         this.onFormInputTagChange = this.onFormInputTagChange.bind(this);
         this.handleonAddNewQuestion = this.handleonAddNewQuestion.bind(this);
+        this.onFormLanguageChange = this.onFormLanguageChange.bind(this);
+        this.onFormQuestionLevelChange = this.onFormQuestionLevelChange.bind(this);
         this.initializeForm = this.initializeForm.bind(this);
 
         this.initializeForm(props.questionModel || {}, props.minoptions, props.maxOptions, true);
@@ -34,10 +36,12 @@ export default class QuestionForm extends Component {
             answers: questionModel.answers || [],
             minoptions: minoptions,
             maxOptions: maxOptions || 5,
-            subject: questionModel.subject || 'General',
+            subjects: questionModel.subjects || ['General'],
             tags: questionModel.tags || [],
             isError: false,
             message: '',
+            language: questionModel.language || 'English',
+            level: questionModel.level || 1
         };
         if (initial || false) {
             this.state = stateObject;
@@ -58,7 +62,9 @@ export default class QuestionForm extends Component {
                 options: this.state.options || [],
                 answers: this.state.answers || [],
                 tags: this.state.tags || [],
-                subject: this.state.subject || ''
+                subjects: this.state.subjects || ['General'],
+                language: this.state.language,
+                level: this.state.level
             });
         }
     }
@@ -110,9 +116,31 @@ export default class QuestionForm extends Component {
         this.setState({ question: q });
     }
 
+    onFormLanguageChange(e) {
+        let l = e.target.value;
+        this.setState({ language: l });
+    }
+
     onFormInputSubjectChange(e) {
-        let s = e.target.value;
-        this.setState({ subject: s });
+        if (e.key == "Enter" || e.key == " ") {
+            let sval = e.target.value;
+            sval = (sval || "").trim();
+            if (sval != "") {
+                let subjects = Object.assign(this.state.subjects || []);
+                if (subjects.filter((s) =>
+                    s.trim().toLowerCase() == sval.toLowerCase()).length == 0) {
+                        subjects.push(sval);
+                    this.setState({ subjects: subjects });
+                }
+                e.currentTarget.value = "";
+                e.preventDefault();
+            }
+        }
+    }
+
+    onFormQuestionLevelChange(e) {
+        let level = e.target.value;
+        this.setState({ level: level });
     }
 
     onFormInputTagChange(e) {
@@ -121,8 +149,11 @@ export default class QuestionForm extends Component {
             tval = (tval || "").trim();
             if (tval != "") {
                 let tags = Object.assign(this.state.tags || []);
-                tags.push(tval);
-                this.setState({ tags: tags });
+                if (tags.filter((t) =>
+                    t.trim().toLowerCase() == tval.toLowerCase()).length == 0) {
+                    tags.push(tval);
+                    this.setState({ tags: tags });
+                }
                 e.currentTarget.value = "";
                 e.preventDefault();
             }
@@ -144,13 +175,15 @@ export default class QuestionForm extends Component {
             <div className="container-fluid">
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group row">
-                        <div className="col-sm-1"></div>
+                        <div className="col-sm-1">
+                            <label className=''><span class="glyphicon glyphicon-hand-right"></span></label>
+                        </div>
                         <div className="col-sm-1">
                             <label className='label label-default' htmlFor="question">Question</label>
                         </div>
                         <div className="col-sm-1"></div>
                         <div className="col-sm-8">
-                            <textarea readOnly={this.props.viewMode || false} required={true} onChange={this.onFormInputQuestionChange} className="form-control" id="question" value={this.state.question} placeholder="Enter question here" />
+                            <textarea disabled={this.props.viewMode || false} required={true} onChange={this.onFormInputQuestionChange} className="form-control" id="question" value={this.state.question} placeholder="Enter question here" />
                         </div>
                     </div>
                     {
@@ -198,13 +231,31 @@ export default class QuestionForm extends Component {
                     <div className="form-group row">
                         <div className="col-sm-1"></div>
                         <div className="col-sm-1">
-                            <label className='label label-default' htmlFor="subject">Subject</label>
+                            <label className='label label-default' htmlFor="subject">Subjects</label>
                         </div>
                         <div className="col-sm-1"></div>
                         <div className="col-sm-8">
-                            <input disabled={this.props.viewMode || false} required={true} onChange={this.onFormInputSubjectChange} className="form-control" id="subject" value={this.state.subject} placeholder="Enter subject here" />
+                            <input disabled={this.props.viewMode || false}  onKeyPress={this.onFormInputSubjectChange} className="form-control" id="subject"  placeholder="Enter subject here" />
                         </div>
                     </div>
+                    {
+                        (this.state.subjects || []).length > 0 ?
+                            (<div className="form-group row">
+                                <div className="col-sm-1"></div>
+                                <div className="col-sm-1">
+                                </div>
+                                <div className="col-sm-1"></div>
+                                <div className="col-sm-9 text-left">
+                                    {
+                                        (this.state.subjects || []).map((val, index) => {
+                                            return (<div key={index} className="label label-default mr-2 pr-2 card">
+                                                <span>{val}</span>
+                                            </div>)
+                                        })
+                                    }
+                                </div>
+                            </div>) : ''
+                    }
                     <div className="form-group row">
                         <div className="col-sm-1"></div>
                         <div className="col-sm-1">
@@ -233,22 +284,51 @@ export default class QuestionForm extends Component {
                                 </div>
                             </div>) : ''
                     }
+                    <div className="form-group row">
+                        <div className="col-sm-1"></div>
+                        <div className="col-sm-1">
+                            <label className='label label-default' htmlFor="level">Level</label>
+                        </div>
+                        <div className="col-sm-1"></div>
+                        <div className="col-sm-8">
+                            <select required={true} disabled={this.props.viewMode || false} value={this.state.level || 1} className="form-control" id="level" onChange={this.onFormQuestionLevelChange}>
+                                <option value={1}>Easy</option>
+                                <option value={2}>Walking</option>
+                                <option value={3}>Medium</option>
+                                <option value={4}>Running</option>
+                                <option value={5}>Expert</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <div className="col-sm-1"></div>
+                        <div className="col-sm-1">
+                            <label className='label label-default' htmlFor="language">Language</label>
+                        </div>
+                        <div className="col-sm-1"></div>
+                        <div className="col-sm-8">
+                            <select required={true} disabled={this.props.viewMode || false} value={this.state.language || 'English'} className="form-control" id="language" onChange={this.onFormLanguageChange}>
+                                <option value="English">English</option>
+                                <option value="Hindi">हिन्दी</option>
+                            </select>
+                        </div>
+                    </div>
                     {
-                        (this.state.isError || false)||(this.props.isMsg||false) ?
+                        (this.state.isError || false) || (this.props.isMsg || false) ?
                             (<div className="form-group row">
                                 <div className="col-sm-1"></div>
                                 <div className="col-sm-1"></div>
                                 <div className="col-sm-1"></div>
                                 <div className="col-sm-8">
-                                   {
-                                       (this.state.isError||false)?
-                                       (<h4><label className='label label-danger'>{this.state.message}</label></h4>):
-                                       (<h4><label className='label label-success'>{this.props.message||''}</label></h4>)
-                                   }
+                                    {
+                                        (this.state.isError || false) ?
+                                            (<h4><label className='label label-danger'>{this.state.message}</label></h4>) :
+                                            (<h4><label className='label label-success'>{this.props.message || ''}</label></h4>)
+                                    }
                                 </div>
                             </div>) : ''
                     }
-                    {this.state.isError=false}
+                    {this.state.isError = false}
                     <div className="form-group row">
                         <div className="col-sm-1"></div>
                         <div className="col-sm-1">

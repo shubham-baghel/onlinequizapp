@@ -17,13 +17,16 @@ router.post('/', function (req, res) {
 
     var answers=req.body.answers.map(function(val,index){return new Option({id:val.id,o:val.o})});
     var options=req.body.options.map(function(val,index){return new Option({id:val.id,o:val.o})});
-
+   
     Question.create({
             question : req.body.question,
             answers : answers,
             options : options,
             subject:req.body.subject,
-            tags:req.body.tags
+            subjects:req.body.subjects,
+            tags:req.body.tags,
+            language:req.body.language,
+            level:req.body.level
         }, 
         function (err, question) {
             if (err) return res.status(500).send("Error :"+JSON.stringify(err));

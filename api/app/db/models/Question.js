@@ -9,10 +9,13 @@ var OptionSchema = new Schema({
 
 var QuestionSchema = new mongoose.Schema({ 
   subject:String, 
+  subjects:[String],
   question: String,
   answers: [OptionSchema],
   options: [OptionSchema],
-  tags:[String]
+  tags:[String],
+  language:[String],
+  level:[Number]
 });
 
 var Question = mongoose.model('Question', QuestionSchema);

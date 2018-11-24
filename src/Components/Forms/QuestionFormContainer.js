@@ -34,8 +34,8 @@ export default class QuestionFormContainer extends Component {
         return (
             <div className="container-fluid">
                 <div className="row mb-2 mt-2" >
-                    <div className='col-sm-1'></div>
-                    <div className="col-sm-10 card pt-3">
+                    <div className='col-sm-2'></div>
+                    <div className="col-sm-8 card pt-3">
                         <QuestionForm questionModel={this.state.questionFormData}
                             maxOptions={(this.state.questionFormData.options||[]).length}
                             onAddNewQuestion={this.onHandleAddNewQuestion}
@@ -45,7 +45,7 @@ export default class QuestionFormContainer extends Component {
                             message={this.state.message}
                         />
                     </div>
-                    <div className='col-sm-1'></div>
+                    <div className='col-sm-2'></div>
                 </div>
             </div>
         );

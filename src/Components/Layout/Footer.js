@@ -3,15 +3,16 @@ import React, { Component } from 'react'
 class Footer extends Component {
     render() {
         return (
+            <div className='footer fixed-bottom'>
             <footer className="border-top">
                 <div className="row m-auto">
                     <div className="col-sm-12">
-                        <span>Posted by: Shubham Baghel</span><br />
-                        <span>Contact information: <a href="mailto:someone@example.com">
-                            sbaghel93@outlook.com</a>.</span>
+                        <span>&copy;Quiz {new Date().getFullYear()}</span><br />
+                        <span>Quiz yourself in a way!</span>
                     </div>
                 </div>
             </footer>
+            </div>
 
         )
     }
