@@ -35,7 +35,7 @@ export default class QuizContainer extends Component {
     }
 
     handleQuizRevisit(userResponse){
-        debugger;
+        
         this.setState({isRevisit : true, userResponse : userResponse});
         
     }

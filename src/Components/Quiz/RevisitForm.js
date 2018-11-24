@@ -8,15 +8,40 @@ export default class RevisitForm extends Component{
     }
     render(){
         return (
-            <div>
-                Quiz Review
-                {
-                    Object.keys(this.props.userRes).map((val,i)=>{
-                        return (<button className={this.props.userRes[val].length > 0 ? "btn btn-primary" :"btn btn-btn-secondary" } >{++val}</button>)
-                    })
-                }
-                    <button className="btn btn-primary" onClick={this.props.revisitQuiz}>Revisit Quiz</button>
-                    <button className="btn btn-success" onClick={this.props.finishQuiz} >Finish Quiz</button>
+            <div className='container-fluid mt-2'>
+                <div className='row mt-2'>
+                    <div className='col-sm-5'></div>
+                    <div className='col-sm-2'>
+                      <label className='label label-default'> Quiz Review</label>
+                    </div>
+                    <div className='col-sm-5'></div>
+                </div>
+                <div className='row mt-4'>
+                    <div className='col-sm-2'>
+                    </div>
+                    <div className='col-sm-8'>
+                    {
+                        Object.keys(this.props.userRes).map((val,i)=>{
+                            return(
+                                <div className='m-2 d-inline'>
+                                    <label className={this.props.userRes[val].length == 0 ? "label label-default" :"label label-primary" } >{++val}</label>
+                                </div>
+                            )
+                        })
+                    }
+                    </div>
+                    <div className='col-sm-2'></div>
+                </div>
+                <div className='row mt-4'>
+                    <div className='col-sm-5'></div>
+                    <div className='col-sm-1'>
+                         <button className="btn btn-primary" onClick={this.props.revisitQuiz}>Revisit Quiz</button>
+                    </div>
+                    <div className='col-sm-1'>
+                         <button className="btn btn-success" onClick={this.props.finishQuiz} >Finish Quiz</button>
+                    </div>
+                    <div className='col-sm-5'></div>
+                </div>
             </div>
             
         )
