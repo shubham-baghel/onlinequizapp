@@ -36,8 +36,8 @@ export default class QuestionForm extends Component {
             maxOptions: maxOptions || 5,
             subject: questionModel.subject || 'General',
             tags: questionModel.tags || [],
-            isError: '',
-            error: false
+            isError: false,
+            message: '',
         };
         if (initial || false) {
             this.state = stateObject;
@@ -50,7 +50,7 @@ export default class QuestionForm extends Component {
     handleSubmit(e) {
         e.preventDefault();
         if (this.state.answers.length == 0) {
-            this.setState({ isError: true, error: "Please mark at least one Option as an Answer!" });
+            this.setState({ isError: true, message: "Please mark at least one Option as an Answer!" });
         } else {
             this.props.onFormSubmit({
                 _id: this.state._id,
@@ -234,13 +234,17 @@ export default class QuestionForm extends Component {
                             </div>) : ''
                     }
                     {
-                        this.state.isError || false ?
+                        (this.state.isError || false)||(this.props.isMsg||false) ?
                             (<div className="form-group row">
                                 <div className="col-sm-1"></div>
                                 <div className="col-sm-1"></div>
                                 <div className="col-sm-1"></div>
                                 <div className="col-sm-8">
-                                   <h4> <label className='label label-danger'>{this.state.error}</label></h4>
+                                   {
+                                       (this.state.isError||false)?
+                                       (<h4><label className='label label-danger'>{this.state.message}</label></h4>):
+                                       (<h4><label className='label label-success'>{this.props.message||''}</label></h4>)
+                                   }
                                 </div>
                             </div>) : ''
                     }

@@ -10,8 +10,8 @@ class Footer extends Component {
                         <span>Contact information: <a href="mailto:someone@example.com">
                             sbaghel93@outlook.com</a>.</span>
                     </div>
-                </div>
-            </footer>
+                </footer>
+            </div>
         )
     }
 
