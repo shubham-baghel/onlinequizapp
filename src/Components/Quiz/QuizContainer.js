@@ -25,8 +25,8 @@ export default class QuizContainer extends Component {
      componentWillMount = function () {
          debugger;
         this.setState({ isFetched: false })
-        let filterCriteria = this.props.location.state.quizCriteria || [];
-        this.questionService.getQuestionsBySubject(filterCriteria.selectedSubjects.join("/"))
+        let filterCriteria = (this.props.location.state && this.props.location.state.quizCriteria.selectedSubjects.join("/")) || "gk";
+        this.questionService.getQuestionsBySubject(filterCriteria)
             .then(res => {
                 console.log(res);
                 this.setState({ quizData: res, isFetched: true });

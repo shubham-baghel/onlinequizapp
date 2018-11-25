@@ -15,7 +15,7 @@ class Routing extends Component {
                     <Route exact path='/quiz' component={QuizContainer} />
                     <Route path='/q/add' component={QuestionFormContainer}/>
                     <Route exact path='/quiz/review' component= {RevisitForm} />
-                    <Route path='/preparequiz-visitor' component= {QuizLaunchByVisitor} />
+                    <Route path='/visitorQuiz' component= {QuizLaunchByVisitor} />
                 </Switch>
             </main>
         )
