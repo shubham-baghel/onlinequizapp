@@ -1,0 +1,8 @@
+{
+    "env": {
+      "JWT_SECRET": {
+        "description": "A secret string to generate JWT tokens (REQUIRED)",
+        "value":""
+      }
+    }
+}

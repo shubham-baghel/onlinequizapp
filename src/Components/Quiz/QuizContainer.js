@@ -5,14 +5,16 @@ import QuestionContainer from './QuestionContainer'
 import QuestionService from '../../Services/QuizService/QuestionService';
 import RevisitForm from './RevisitForm';
 import QuizResult from './QuizResult';
+import AuthService from '../../Services/AuthService';
 
-export default class QuizContainer extends Component {
+class QuizContainer extends Component {
      constructor(props){
          super(props);
          this.handleQuizRevisit = this.handleQuizRevisit.bind(this);
          this.revisitQuiz = this.revisitQuiz.bind(this);
          this.onFinishQuiz = this.onFinishQuiz.bind(this);
         this.questionService = new QuestionService();
+        this.authService = new AuthService();
          this.state = {
              isFetched : false,
              quizData : {},
@@ -23,7 +25,6 @@ export default class QuizContainer extends Component {
      }
 
      componentWillMount = function () {
-         debugger;
         this.setState({ isFetched: false })
         let filterCriteria = (this.props.location.state && this.props.location.state.quizCriteria.selectedSubjects.join("/")) || "gk";
         this.questionService.getQuestionsBySubject(filterCriteria)
@@ -80,3 +81,6 @@ export default class QuizContainer extends Component {
         )
      }
  }
+
+
+ export default QuizContainer;

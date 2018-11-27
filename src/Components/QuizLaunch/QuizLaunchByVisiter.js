@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
+import withAuth from '../Shared/withAuth';
 
 
-export default class QuizLaunchByVisitor extends Component {
+class QuizLaunchByVisitor extends Component {
     constructor(props) {
         super(props);
         this.handleSelection = this.handleSelection.bind(this);
@@ -85,3 +86,5 @@ export default class QuizLaunchByVisitor extends Component {
 
     }
 }
+
+export default withAuth(QuizLaunchByVisitor);
