@@ -8,16 +8,14 @@ class Options extends Component {
     render(){
         let responses=this.props.responses;
         return(
-            <div className="card-body">
-                <ul className="list-group">
-                {
-                    this.props.options.map((element,i) => {
-                        var responded= responses.includes(element.id);
-                        return(<Option clicked={responded} key={i} option = {element} onOptionSelect = {this.props.onOptionSelect}/>)
-                    })
-                }
-                </ul>
-            </div>
+            <ul className="list-group">
+            {
+                this.props.options.map((element,i) => {
+                    var responded= responses.includes(element.id);
+                    return(<Option clicked={responded} key={i} option = {element} onOptionSelect = {this.props.onOptionSelect}/>)
+                })
+            }
+            </ul>
         )
     }
 

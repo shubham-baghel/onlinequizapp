@@ -5,7 +5,7 @@ class Question extends Component {
     render() {
 
         return (
-            <div className="card-header">{this.props.question}</div>
+            <div>{this.props.question}</div>
         )
     }
 }

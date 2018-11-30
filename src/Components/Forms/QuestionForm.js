@@ -190,7 +190,7 @@ export default class QuestionForm extends Component {
                             <label className=''><span className="glyphicon glyphicon-hand-right"></span></label>
                         </div>
                         <div className="col-sm-1">
-                            <label className='label label-default' htmlFor="question">Question</label>
+                            <label className='label label-default display-4' htmlFor="question">Question</label>
                         </div>
                         <div className="col-sm-1"></div>
                         <div className="col-sm-8">
