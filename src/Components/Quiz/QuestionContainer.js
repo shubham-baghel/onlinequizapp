@@ -4,7 +4,8 @@ import QuestionCard from './QuestionCard';
 import PreviousButton from './PreviousButton';
 import NextButton from './NextButton';
 import FinishButton from './FinishButton';
-import { Redirect } from 'react-router-dom'
+import QuizStatus from './QuizStatus';
+import { throws } from 'assert';
 
 export default class QuestionContainer extends Component {
 
@@ -14,16 +15,34 @@ export default class QuestionContainer extends Component {
         this.handlePrevClick = this.handlePrevClick.bind(this);
         this.handleFinishClick = this.handleFinishClick.bind(this);
         this.onOptionSelect = this.onOptionSelect.bind(this);
+        this.handleOnQuestionStatusLabel = this.handleOnQuestionStatusLabel.bind(this);
+        this.onQuizTimeOut=this.onQuizTimeOut.bind(this);   
+        this.onQuizClockStart=this.onQuizClockStart.bind(this);
+
         this.state = {
             index: 0,
-            quiz: this.props.quizData || {},
+            quiz: this.props.quizData || [],
             isNext: true,
             isPrev: false,
             currentQuestion: this.props.quizData[0] || {},
-            userResponses: this.props.userResponses || {},
+            userResponses: this.props.userResponses || [],
             fetching: true,
             isFormReview: false,
+            ticking:false
         };
+        this.handleTimer=null;
+    }
+
+    onQuizClockStart(handleTimer){
+        this.handleTimer=handleTimer;
+        this.state.ticking=true;
+        if(this.props.onQuizClockStart){
+            this.props.onQuizClockStart();
+        }
+    }
+
+    onQuizTimeOut(){
+        this.handleFinishClick();
     }
 
     handleNextClick(e) {
@@ -48,16 +67,22 @@ export default class QuestionContainer extends Component {
         });
     }
 
-    handleFinishClick(e) {
+    handleFinishClick() {
         let newResponses = Object.assign({}, this.state.userResponses);
         newResponses[this.state.index] = newResponses[this.state.index] || [];
-        
-        this.props.quizData.forEach((ele,index) => {
+
+        this.props.quizData.forEach((ele, index) => {
             newResponses[index] = newResponses[index] || [];
         });
-
+        
         this.state.userResponses = newResponses;
-        this.props.onQuizRevisit(this.state.userResponses);
+
+        if(this.handleTimer){
+            clearInterval(this.handleTimer);
+        }
+
+        this.state.ticking=false;
+        this.props.onFinishQuiz(this.state.userResponses);
     }
 
     onOptionSelect(e) {
@@ -75,8 +100,11 @@ export default class QuestionContainer extends Component {
                 newResponses[this.state.index] = [id];
             }
         }
-        debugger;
         this.setState({ userResponses: newResponses });
+    }
+
+    handleOnQuestionStatusLabel(index) {
+        this.setState({ index: index, currentQuestion: this.state.quiz[index] });
     }
 
     render() {
@@ -105,20 +133,22 @@ export default class QuestionContainer extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="card col-sm-2">
-                        <div className="card-body">
-                            <h5 className="card-title">Quiz-001</h5>
-                            <p className="card-text">
-                            {
-                                this.props.quizData.map((ele,index) => {
-                                    return( <div className='m-2 d-inline'>
-                                             <label className={(!this.state.userResponses[index] || this.state.userResponses[index].length==0) ? "label label-default" :"label label-primary"} >{index+1}</label>
-                                         </div>)
-                                })
-                            }
-                            </p>
-                            <a href="#" onClick={this.handleFinishClick} className="btn btn-primary">Finish</a>
-                        </div>
+                    <div className="col-sm-2">
+                        <QuizStatus
+                            QuizTimer={{
+                                allowTimer:this.props.allowTimer,
+                                startQuiz:this.props.startQuiz,
+                                ticking:this.state.ticking||false,
+                                quizDuration: this.props.quizDuration,
+                                onQuizClockStart: this.onQuizClockStart,
+                                onQuizTimeOut:this.onQuizTimeOut
+                            }}
+                            currentIndex={this.state.index}
+                            handleOnQuestionStatusLabel={this.handleOnQuestionStatusLabel}
+                            handleFinishClick={this.handleFinishClick}
+                            dontallowjump={this.props.dontallowjump}
+                            quizData={this.props.quizData}
+                            userResponses={this.state.userResponses} />
                     </div>
                     <div className="col-sm-1"></div>
                 </div>

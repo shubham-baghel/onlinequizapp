@@ -51,7 +51,7 @@ export default class QuizResult extends Component {
                         {
                             result.map((val, i) => {
                                 return (
-                                    <div className='m-2 d-inline'>
+                                    <div key={i} className='m-2 d-inline'>
                                         <span className={result[i] == false ? "label label-default" : "label label-primary"} >{++i}</span>
                                     </div>
                                 )

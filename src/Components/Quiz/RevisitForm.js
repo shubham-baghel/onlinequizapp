@@ -23,7 +23,7 @@ export default class RevisitForm extends Component{
                     {
                         Object.keys(this.props.userRes).map((val,i)=>{
                             return(
-                                <div className='m-2 d-inline'>
+                                <div key={i} className='m-2 d-inline'>
                                     <label className={this.props.userRes[val].length == 0 ? "label label-default" :"label label-primary" } >{++val}</label>
                                 </div>
                             )
@@ -35,10 +35,10 @@ export default class RevisitForm extends Component{
                 <div className='row mt-4'>
                     <div className='col-sm-5'></div>
                     <div className='col-sm-1'>
-                         <button className="btn btn-primary" onClick={this.props.revisitQuiz}>Revisit Quiz</button>
+                         <button className="btn btn-primary" onClick={this.props.onRevisitQuiz}>Revisit</button>
                     </div>
                     <div className='col-sm-1'>
-                         <button className="btn btn-success" onClick={this.props.finishQuiz} >Finish Quiz</button>
+                         <button className="btn btn-success" onClick={this.props.onSubmitQuiz} >Submit</button>
                     </div>
                     <div className='col-sm-5'></div>
                 </div>
