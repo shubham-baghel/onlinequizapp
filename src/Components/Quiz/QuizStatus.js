@@ -40,10 +40,19 @@ export default class QuizStatus extends Component {
         this.state.ticking=true;
     }
 
-    render() {
+    componentDidMount(){
         if(this.props.QuizTimer.allowTimer && !this.state.ticking && this.props.QuizTimer.startQuiz){
             this.startCountDown(this.props.QuizTimer.quizDuration);
         }
+    }
+
+    componentWillUnmount(){
+        this.state.ticking=false;
+        clearInterval(this.intervalHandle);
+    }
+
+    render() {
+        
         return (
             <div className="card">
                 <div className="card-body">

@@ -56,7 +56,7 @@ class QuizContainer extends Component {
     }
 
     handleOnStartNew(){
-
+        this.componentWillMount();
     }
 
      render(){

@@ -71,7 +71,7 @@ export default class QuizResult extends Component {
                 <div className='row mt-4'>
                     <div className='col-sm-5'></div>
                     <div className='col-sm-2'>
-                        <button className="btn btn-primary">Quiz Again</button>
+                        <button className="btn btn-primary" onClick={this.props.onStartNew}>Quiz Again</button>
                     </div>
                     <div className='col-sm-5'></div>
                 </div>

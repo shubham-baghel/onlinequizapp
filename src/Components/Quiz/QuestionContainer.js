@@ -21,21 +21,14 @@ export default class QuestionContainer extends Component {
 
         this.state = {
             index: 0,
-            quiz: this.props.quizData || [],
-            isNext: true,
-            isPrev: false,
             currentQuestion: this.props.quizData[0] || {},
-            userResponses: this.props.userResponses || [],
-            fetching: true,
-            isFormReview: false,
-            ticking:false
+            userResponses: this.props.userResponses || []
         };
         this.handleTimer=null;
     }
 
     onQuizClockStart(handleTimer){
         this.handleTimer=handleTimer;
-        this.state.ticking=true;
         if(this.props.onQuizClockStart){
             this.props.onQuizClockStart();
         }
@@ -53,7 +46,7 @@ export default class QuestionContainer extends Component {
         this.setState(prevState => {
             return {
                 index: prevState.index + 1,
-                currentQuestion: this.state.quiz[prevState.index + 1]
+                currentQuestion: this.props.quizData[prevState.index + 1]
             }
         });
         this.state.userResponses = newResponses;
@@ -62,7 +55,7 @@ export default class QuestionContainer extends Component {
     handlePrevClick() {
         this.setState(prevState => {
             return {
-                index: prevState.index - 1, currentQuestion: this.state.quiz[prevState.index - 1]
+                index: prevState.index - 1, currentQuestion: this.props.quizData[prevState.index - 1]
             }
         });
     }
@@ -81,7 +74,6 @@ export default class QuestionContainer extends Component {
             clearInterval(this.handleTimer);
         }
 
-        this.state.ticking=false;
         this.props.onFinishQuiz(this.state.userResponses);
     }
 
@@ -104,7 +96,15 @@ export default class QuestionContainer extends Component {
     }
 
     handleOnQuestionStatusLabel(index) {
-        this.setState({ index: index, currentQuestion: this.state.quiz[index] });
+        this.setState({ index: index, currentQuestion: this.props.quizData[index] });
+    }
+
+    componentDidMount(){
+        
+    }
+
+    componentWillUnmount(){
+        
     }
 
     render() {
@@ -112,13 +112,13 @@ export default class QuestionContainer extends Component {
         return (
             <div className="container-fluid">
                 <div className="row mb-2 mt-2">
-                    <div className="col-sm-1"></div>
-                    <div className="col-sm-8">
+                    <div className="col-sm-2"></div>
+                    <div className="col-sm-6">
                         <div className="row">
                             <div className="col-sm-1">
                                 <PreviousButton onHandleClick={this.state.index > 0 ? this.handlePrevClick : () => { }} />
                             </div>
-                            <div className="col-sm-10">
+                            <div className="col-sm-10 p-0">
                                 <QuestionCard
                                     responses={this.state.userResponses[this.state.index] || []}
                                     question={this.state.currentQuestion}
@@ -126,19 +126,18 @@ export default class QuestionContainer extends Component {
                             </div>
                             <div className="col-sm-1">
                                 {
-                                    this.state.index < this.state.quiz.length - 1 ?
+                                    this.state.index < this.props.quizData.length - 1 ?
                                         (<NextButton onHandleClick={this.handleNextClick} />) :
                                         (<FinishButton onHandleClick={this.handleFinishClick} />)
                                 }
                             </div>
                         </div>
                     </div>
-                    <div className="col-sm-2">
+                    <div className="col-sm-2 p-0">
                         <QuizStatus
                             QuizTimer={{
                                 allowTimer:this.props.allowTimer,
                                 startQuiz:this.props.startQuiz,
-                                ticking:this.state.ticking||false,
                                 quizDuration: this.props.quizDuration,
                                 onQuizClockStart: this.onQuizClockStart,
                                 onQuizTimeOut:this.onQuizTimeOut
@@ -150,7 +149,7 @@ export default class QuestionContainer extends Component {
                             quizData={this.props.quizData}
                             userResponses={this.state.userResponses} />
                     </div>
-                    <div className="col-sm-1"></div>
+                    <div className="col-sm-2"></div>
                 </div>
             </div>
         )
