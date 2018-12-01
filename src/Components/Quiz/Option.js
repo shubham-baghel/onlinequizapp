@@ -11,7 +11,7 @@ class Option extends Component {
     }
 
     render() {
-        var className = this.props.clicked ? "list-group-item btn btn-light active" : "list-group-item btn btn-light"
+        var className = this.props.clicked ? "list-group-item btn mt-2 active" : "list-group-item btn mt-2"
         return (
             <li className= {className}
                 id={this.props.option.id}
