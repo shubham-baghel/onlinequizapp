@@ -1,49 +1,67 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const User = require('../../db/models/User');
+var util = require('../../common/Utility');
 
 var router = express.Router();
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
-let users = [
-    {
-        id: 1,
-        username: 'test',
-        password: 'test'
-    },
-    {
-        id: 2,
-        username: 'test2',
-        password: 'test2'
-    }
-];
-
 router.post("/login",function (req, res) {
     const { username, password } = req.body;
-    // Use your DB ORM logic here to find user and compare password
-    for (let user of users) { // I am using a simple array users which i made above
-        if (username == user.username && password == user.password /* Use your password hash checking logic here !*/) {
-            //If all credentials are correct do this
-            let token = jwt.sign({ id: user.id, username: user.username }, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
-            console.log(token);
-            
-            res.json({
-                sucess: true,
-                err: null,
-                token
-            });
-            break;
+    User.findOne({'email' :username}).exec(function (err, user) {
+        if (err) {
+        return res.status(500).send("Error :"+JSON.stringify(err));
         }
-        else {
-            res.status(401).json({
-                sucess: false,
-                token: null,
-                err: 'Username or password is incorrect'
-            });
+
+        if(!user){
+            return res.status(500).json({
+                error: true,
+                message: 'Username or Password is Wrong'
+              });
         }
-    }
+        
+        bcrypt.compare(password,user.password,
+            function(err, valid) {
+                if(!valid){
+                    return res.status(404).json({
+                        error : true,
+                        message :'Username or Password is Wrong'
+                    })
+                }
+                else{
+                    var token = util.generateToken(user); 
+                    console.log(token);
+                    return res.json({
+                            sucess: true,
+                            err: null,
+                            user,
+                            token
+                        });
+                }
+            })
+    })
+})
+
+router.post("/signUp", function(req, res) {
+
+    let hash = bcrypt.hashSync(req.body.password.trim(), 10);
+    User.create({
+        username : req.body.username,
+        password : hash,
+        email : req.body.email,
+        mobile : req.body.mobile,
+        createdDate : new Date(),
+        modifiedDate : new Date()
+            },function(err, user) {
+                if(err) return  res.status(500).send("Error :"+JSON.stringify(err));
+                let token = util.generateToken(user);
+                res.status(200).json({ user : user,token : token}); 
+            })
+
 })
 
 module.exports = router;

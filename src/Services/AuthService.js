@@ -19,7 +19,7 @@ export default class AuthService {
                 }).then( res => {
                     this.setToken(res.token)
                     return Promise.resolve(res);
-        })
+                })
     }
 
     
