@@ -1,5 +1,5 @@
 import React , {Component} from 'react' 
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import Home from './Home'
 import QuizContainer from './Quiz/QuizContainer'
 import QuestionFormContainer from './Forms/QuestionFormContainer';
@@ -10,17 +10,17 @@ import SignIn from './Account/SingIn';
 class Routing extends Component {
     render(){
         return(
-            <main>
+            <div>
                 <Switch>
                     <Route exact path='/' component={Home} />
                     <Route exact path='/quiz' component={QuizContainer} />
                     <Route path='/q/add' component={QuestionFormContainer}/>
                     <Route exact path='/quiz/review' component= {RevisitForm} />
                     <Route path='/visitorQuiz' component= {QuizLaunchByVisitor} />
-                    <Route path="/signin" component ={SignIn} />
+                    <Redirect to="/" />             
                 </Switch>
-            </main>
-        )
+            </div>
+        ) 
     }
 }
 

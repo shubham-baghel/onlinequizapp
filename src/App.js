@@ -6,16 +6,25 @@ import Header from './Components/Layout/Header'
 import Footer from './Components/Layout/Footer'
 import LeftMenu from './Components/Layout/LeftMenu'
 import Routing from './Components/Routing';
-
+import {Router, Switch, Route} from 'react-router-dom';
+import SignIn from './Components/Account/SingIn';
+import Main from './Components/Main';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header/>
+      
+        <Switch>
+        <Route path="/signin" exact component ={SignIn} />
+        <Route path='/' component={Main} />
+        </Switch>
+      
+
+        {/* <Header/>
         <LeftMenu/>
         <Routing/>
-        <Footer/>
+        <Footer/> */}
       </div>
      
     );
