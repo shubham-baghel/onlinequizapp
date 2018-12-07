@@ -1,45 +1,96 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom';
+import AuthService from '../../Services/AuthService';
 
 export default class SignUp extends Component {
     constructor(props){
-        super(props);
-    }
+		super(props);
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.validateForm = this.validateForm.bind(this);
+		this.Auth = new AuthService();
+		this.state = {
+			firstName : '',
+			lastName : '',
+			email : '',
+			mobile : '',
+			password : '',
+			confirmPassword : '',
+		}
+	}
+
+	validateForm() {
+		return (
+		  this.state.email.length > 0 &&
+		  this.state.password.length > 0 &&
+		  this.state.password === this.state.confirmPassword
+		);
+	  }
+
+	handleChange(event) {
+		this.setState({
+			[event.target.id] : event.target.value
+		})
+	}  
+
+	
+	handleSubmit(event){
+		debugger;
+		event.preventDefault();
+		let newUser = {
+			firstName : this.state.firstName,
+			lastName : this.state.lastName,
+			email : this.state.email,
+			mobile : this.state.mobile,
+			password : this.state.password
+		}
+		this.Auth.signUp(newUser)
+		.then(res => {
+		  this.props.history.replace('/');
+		})
+		.catch(err => {
+		  alert(err);
+		})
+		
+	}
+	
+
     render() {
         return(
             <div className="container">
             <div className="row">
             <div className="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-		<form role="form">
-			<h2>Please Sign Up <small>It's free and always will be.</small></h2>
+		<form role="form" onSubmit = {this.handleSubmit}>
+			<h2>Sign Up <small>It's free and always will be.</small></h2>
 			<hr className="colorgraph" />
 			<div className="row">
 				<div className="col-xs-12 col-sm-6 col-md-6">
 					<div className="form-group">
-                        <input type="text" name="first_name" id="first_name" className="form-control input-lg" placeholder="First Name" tabindex="1" />
+                        <input type="text" name="firstName" id="firstName" value={this.state.firstName} onChange={this.handleChange} className="form-control input-lg" placeholder="First Name" tabindex="1" />
 					</div>
 				</div>
 				<div className="col-xs-12 col-sm-6 col-md-6">
 					<div className="form-group">
-						<input type="text" name="last_name" id="last_name" className="form-control input-lg" placeholder="Last Name" tabindex="2" />
+						<input type="text" name="lastName" id="lastName" value={this.state.lastName}  onChange={this.handleChange} className="form-control input-lg" placeholder="Last Name" tabindex="2" />
 					</div>
 				</div>
 			</div>
 			<div className="form-group">
-				<input type="text" name="display_name" id="display_name" className="form-control input-lg" placeholder="Display Name" tabindex="3" />
+				<input type="email" name="email" id="email" value={this.state.email} required={true}  onChange = {this.handleChange} className="form-control input-lg" placeholder="Email Address" tabindex="4" onInvalid={(e) => e.target.setCustomValidity("Please enter valid Email")} />
 			</div>
 			<div className="form-group">
-				<input type="email" name="email" id="email" className="form-control input-lg" placeholder="Email Address" tabindex="4" />
+				<input type="text" maxLength={10} name="mobile" id="mobile" value={this.state.mobile} required={true}  onChange = {this.handleChange} className="form-control input-lg" placeholder="Mobile" tabindex="4" />
 			</div>
 			<div className="row">
 				<div className="col-xs-12 col-sm-6 col-md-6">
 					<div className="form-group">
-						<input type="password" name="password" id="password" className="form-control input-lg" placeholder="Password" tabindex="5" />
+						<input type="password" name="password" id="password" value={this.state.password} required={true}  onChange = {this.handleChange} className="form-control input-lg" placeholder="Password" tabindex="5" />
 					</div>
 				</div>
-				<div className="col-xs-12 col-sm-6 col-md-6">
+				<div className="col-xs-12 col-sm-6 col-md-6">	
 					<div className="form-group">
-						<input type="password" name="password_confirmation" id="password_confirmation" className="form-control input-lg" placeholder="Confirm Password" tabindex="6" />
+						<input type="password" name="confirmPassword" id="confirmPassword" required={true} value={this.state.confirmPassword}  onChange = {this.handleChange} className="form-control input-lg" placeholder="Confirm Password" tabindex="6" />
 					</div>
 				</div>
 			</div>

@@ -12,7 +12,7 @@ router.use(bodyParser.json());
 
 router.post("/login",function (req, res) {
     const { username, password } = req.body;
-    User.findOne({'email' :username}).exec(function (err, user) {
+    User.findOne({'username' :username}).exec(function (err, user) {
         if (err) {
         return res.status(500).send("Error :"+JSON.stringify(err));
         }
@@ -46,14 +46,14 @@ router.post("/login",function (req, res) {
     })
 })
 
-router.post("/signUp", function(req, res) {
-
-    let hash = bcrypt.hashSync(req.body.password.trim(), 10);
+router.post("/signup", function(req, res) {
+    let newUser = req.body.newUser;
+    let hash = bcrypt.hashSync(newUser.password.trim(), 10);
     User.create({
-        username : req.body.username,
+        username : newUser.email,
         password : hash,
-        email : req.body.email,
-        mobile : req.body.mobile,
+        email : newUser.email,
+        mobile : newUser.mobile,
         createdDate : new Date(),
         modifiedDate : new Date()
             },function(err, user) {

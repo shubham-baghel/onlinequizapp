@@ -9,6 +9,7 @@ export default class AuthService {
     }
 
     login(username, password) {
+       // alert(username + password);
         return request({
             url : `/api/account/login`,
             method : "POST",
@@ -22,6 +23,18 @@ export default class AuthService {
                 })
     }
 
+    signUp(newUser){
+        return request({
+            url : `/api/account/signup`,
+            method : "POST",
+            data : {
+                    newUser,
+                }
+                }).then( res => {
+                    this.setToken(res.token)
+                    return Promise.resolve(res);
+                })
+    }
     
 
     setToken(idToken) {
