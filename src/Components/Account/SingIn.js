@@ -44,65 +44,64 @@ export default class SignIn extends Component {
         <div className="row">
           <div className="col-lg-4" />
           <div className="col-lg-4">
-            <div className="container-fluid card">
+            <div className="container-fluid">
               <form className="form-signin" onSubmit={this.handleSubmit}>
-                <div className="form-group row">
-                  <div className="text-center mb-4 col-lg-12">
-                    <h1 className="h3 mb-3 font-weight-normal">Sign In</h1>
+                <div className="row">
+                  <div className="m-0 form-group text-center col-lg-12">
+                    <h2>Sign In <small>Let's be in.</small></h2>
+                    <hr className="colorgraph" />
                   </div>
                 </div>
-                <div className="form-group row">
-                  <div className="col-lg-12">
-                    <label className="label label-info">Email address</label>
+                <div className="row">
+                  <div className="form-group col-lg-12">
                     <input
                       type="text"
                       id="username"
                       onChange={this.handleChange}
                       value={this.state.username}
-                      className="form-control mt-2"
-                      placeholder="Email address"
-                      required=""
+                      className="form-control input-lg mt-2"
+                      placeholder="Email address Or Username"
+                      required={true}
                     />
                   </div>
                 </div>
-                <div className="form-group row">
-                  <div className="form-label-group col-lg-12">
-                    <label className="label label-info">Password</label>
+                <div className="row">
+                  <div className="form-group col-lg-12">
                     <input
                       type="password"
                       id="password"
                       onChange={this.handleChange}
                       value={this.state.password}
-                      className="form-control mt-2"
+                      className="form-control input-lg mt-2"
                       placeholder="Password"
+                      required={true}
                     />
                   </div>
                 </div>
-                <div className="form-group row">
-                  <div className="checkbox col-lg-12">
+                <div className="row m-0">
+                  <div className="checkbox form-group col-lg-12">
                     <label>
                       <input type="checkbox" value="remember-me" />
-                      <label className="label label-default pl-2">Remember me</label>
+                      <span className="label label-primary">Remember me</span>
                     </label>
                   </div>
                 </div>
-                <div className="form-group row">
-                  <div className="col-lg-12">
+                <div className="row m-0">
+                  <div className="form-group col-lg-12">
+                    <hr className="colorgraph" />
                     <button
-                      className="btn btn-lg btn-primary btn-block"
+                      className="btn btn-primary btn-block btn-lg"
                       type="submit"
                       disabled={!this.validateForm()}
-                    >
-                      Sign in
-                 </button>
+                    >Sign in</button>
                   </div>
                 </div>
-                <div className="form-group row">
-                  <div className="col-12">
+                <div className="row">
+                  <div className="form-group col-12">
                     <Link to="/signup" className="label label-primary mr-2"> Have't register yet? Register now!</Link>
                     <Link to="/" className="label label-success">Home</Link>
                   </div>
-                  <br/><br/>
+                  <br /><br />
                 </div>
               </form>
             </div>

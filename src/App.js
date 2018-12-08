@@ -11,7 +11,7 @@ import SignUp from './Components/Account/Signup';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div id="App">
         <Switch>
         <Route path="/signin" exact component ={SignIn} />
         <Route path="/signup" component= {SignUp}/>

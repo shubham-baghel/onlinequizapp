@@ -9,7 +9,6 @@ export default class Main extends Component{
         return (
             <main>
             <Header/>
-            <LeftMenu/>
             <Routing/>
             <Footer/>
             </main>

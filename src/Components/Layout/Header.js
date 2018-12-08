@@ -18,10 +18,10 @@ class Header extends Component {
     render() {
         return (
             <header>
-                <div className="container-fluid bg-info">
+                <div className="container-fluid App-header">
                     <div className="row">
                         <div className="col-sm-12">
-                            <ul role="tablist" className="nav nav-fill nav-tabs" id="navTabs">
+                            <ul role="tablist" className="nav nav-fill nav-tabs border-0" id="navTabs">
                                   <li className="nav-item text-left">
                                     <Link role="tab" aria-selected="true" className="nav-link" to="/"><label className="label"><big><span className="glyphicon glyphicon-home"></span></big></label></Link>
                                 </li>
