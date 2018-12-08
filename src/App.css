@@ -8,6 +8,10 @@ html, body, #root, #App, main {
   text-align: center;
 }
 
+.full-height-container{
+  min-height: 75vh !important;
+}
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
@@ -16,7 +20,10 @@ html, body, #root, #App, main {
 .App-header {
   background-color: #1d7691;
   color: white;
+  min-height: 15vh;
+  margin-bottom: 2px;
 }
+
 .App-Footer {
   background-color: #1d7691;
   min-height: 10vh;
@@ -24,7 +31,7 @@ html, body, #root, #App, main {
   flex-direction: column;
   justify-content: center;
   color: white;
-  vertical-align: bottom !important;
+  margin-top: 2px;
 }
 .App-link {
   color: #61dafb;

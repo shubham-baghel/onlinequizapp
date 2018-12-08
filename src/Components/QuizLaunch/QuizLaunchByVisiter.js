@@ -53,7 +53,7 @@ class QuizLaunchByVisitor extends Component {
         let tags = ['electro', 'organic-chemistry', 'tag', 'electro', 'organic-chemistry', 'tag', 'electro', 'organic-chemistry', 'tag', 'electro', 'organic-chemistry', 'tag', 'electro', 'organic-chemistry', 'tag', 'electro', 'organic-chemistry', 'tag'];
 
         return (
-            <div className="container-fluid mt-4">
+            <div className="container-fluid mt-4 full-height-container">
                 <div className="row">
                     <div className="col-lg-3"> </div>
                     <div className="col-lg-6">

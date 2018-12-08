@@ -95,7 +95,7 @@ export default class SignUp extends Component {
 								</div>
 							</div>
 							<div className="row">
-								<div className="col-xs-8 col-sm-12 col-md-12">
+								<div className="col-xs-12 col-sm-12 col-md-12">
 									By clicking <strong className="label label-primary">Register</strong>, you agree to the <a href="#" data-toggle="modal" data-target="#t_and_c_m">Terms and Conditions</a> set out by this site, including our Cookie Use.
 								</div>
 							</div>
@@ -104,6 +104,7 @@ export default class SignUp extends Component {
 								<div className="col-xs-12 col-md-6 mb-1"><input type="submit" value="Register" className="btn btn-primary btn-block btn-lg" tabIndex="7" /></div>
 								<div className="col-xs-12 col-md-6 mb-2"><Link role="tab" aria-selected="false" className="btn btn-success btn-block btn-lg" to='/signin' >Sign In</Link></div>
 							</div>
+							<div className="text-center m-2"><label className="label label-default">&copy;Quiz {new Date().getFullYear()}</label></div>
 						</form>
 					</div>
 				</div>

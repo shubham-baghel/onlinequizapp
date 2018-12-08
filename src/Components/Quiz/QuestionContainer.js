@@ -110,7 +110,7 @@ export default class QuestionContainer extends Component {
     render() {
         console.log(this.state.userResponses);
         return (
-            <div className="container-fluid">
+            <div className="container-fluid full-height-container">
                 <div className="row mb-2 mt-2">
                     <div className="col-sm-2"></div>
                     <div className="col-sm-6">

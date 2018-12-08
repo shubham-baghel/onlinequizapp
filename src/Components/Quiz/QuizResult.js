@@ -36,7 +36,7 @@ export default class QuizResult extends Component {
     render() {
         let result = this.calculateResult();
         return (
-            <div className='container-fluid mt-2'>
+            <div className='container-fluid mt-2 full-height-container'>
                 <div className='row mt-2'>
                     <div className='col-sm-5'></div>
                     <div className='col-sm-2'>

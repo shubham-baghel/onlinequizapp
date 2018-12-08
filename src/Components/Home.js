@@ -20,7 +20,7 @@ class Home extends Component {
         }
 
         return (
-            <main role="main" className="inner cover">
+            <main role="main" className="inner cover full-height-container">
                 <h1 className="cover-heading">Welcome to Quiz App.</h1>
                 <p className="lead">You can sharpen your skillset by giving quiz from various topics</p>
                 <p className="lead">

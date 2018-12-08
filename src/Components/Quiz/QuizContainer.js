@@ -61,20 +61,20 @@ class QuizContainer extends Component {
 
      render(){
         if(this.state.quizMode==QUIZ_MODE.FETCHING){
-            return <div>Quiz is Loading...</div>;
+            return <div className="full-height-container">Quiz is Loading...</div>;
         }
 
         if(this.state.quizMode==QUIZ_MODE.FINISHED){
             return ( 
-            <RevisitForm 
-             onRevisitQuiz ={this.handleOnRevisitQuiz} 
-             userRes = {this.state.userResponse} 
-             onSubmitQuiz = {this.handleOnSubmitQuiz}/>
+                <RevisitForm 
+                onRevisitQuiz ={this.handleOnRevisitQuiz} 
+                userRes = {this.state.userResponse} 
+                onSubmitQuiz = {this.handleOnSubmitQuiz}/>
             )
          }
 
         if(this.state.quizMode==QUIZ_MODE.SUBMIT){
-            return (<QuizResult 
+            return ( <QuizResult 
                 quizData = {this.state.quizData} 
                 userResponse = {this.state.userResponse}
                 onStartNew={this.handleOnStartNew} />
