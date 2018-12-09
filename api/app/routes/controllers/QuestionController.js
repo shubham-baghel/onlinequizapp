@@ -27,7 +27,9 @@ router.post('/', function (req, res) {
             subjects:subjects,
             tags:tags,
             language:req.body.language,
-            level:req.body.level
+            level:req.body.level,
+            createdBy:req.body.createdBy,
+            createdDate:new Date()
         }, 
         function (err, question) {
             if (err) return res.status(500).send("Error :"+JSON.stringify(err));

@@ -9,7 +9,7 @@ html, body, #root, #App, main {
 }
 
 .full-height-container{
-  min-height: 75vh !important;
+  min-height: 90vh !important;
 }
 
 .App-logo {
@@ -20,13 +20,13 @@ html, body, #root, #App, main {
 .App-header {
   background-color: #1d7691;
   color: white;
-  min-height: 15vh;
+  min-height: 10vh;
   margin-bottom: 2px;
 }
 
 .App-Footer {
   background-color: #1d7691;
-  min-height: 10vh;
+  min-height: 15vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

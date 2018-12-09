@@ -15,7 +15,9 @@ var QuestionSchema = new mongoose.Schema({
   options: [OptionSchema],
   tags:[String],
   language:[String],
-  level:[Number]
+  level:[Number],
+  createdBy:String,
+  createdDate:Date
 });
 
 var Question = mongoose.model('Question', QuestionSchema);
