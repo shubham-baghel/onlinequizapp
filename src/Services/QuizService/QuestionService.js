@@ -26,7 +26,7 @@ export default class QuestionService {
     }
 
     getQuizByUser(userId) {
-        userId=userId||this.this.loggedInUser;
+        userId=userId||this.loggedInUser;
         return request({
             url : `/api/quizes/u/` + userId,
             method: 'GET'

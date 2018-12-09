@@ -28,11 +28,9 @@ class Header extends Component {
                                 <li className="nav-item">
                                     <Link onClick={this.onNavLinkClick} role="tab" aria-selected="false" className="nav-link" to="/quiz"><span className="label"><big>Quiz</big></span></Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link role="tab" aria-selected="false" className="nav-link" to="/q/add"><span className="label"><big>Question</big></span></Link>
-                                </li>
-                                <li role="tab" className="nav-item text-right mt-3">
-                                    <label role="button" onClick={this.signOut.bind(this)} ><span className="glyphicon glyphicon-user"></span></label>  
+                                <li role="tab" className="nav-item text-right">
+                                    <Link role="tab" aria-selected="false" className="nav-link" to="/user_dashboard"><label className="label"><big><span className="glyphicon glyphicon-user"></span></big></label></Link>
+                                    {/* <label role="button" onClick={this.signOut.bind(this)} ><span className="glyphicon glyphicon-user"></span></label>   */}
                                 </li>
                             </ul>
                         </div>
