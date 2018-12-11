@@ -18,9 +18,10 @@ html, body, #root, #App, main {
 }
 
 .App-header {
-  background-color: #1d7691;
+  background-color: #1d7691 !important;
+  border-color:#1d7691 !important;
   color: white;
-  min-height: 10vh;
+  min-height: 10vh !important;
   margin-bottom: 2px;
 }
 
