@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var models = require('../../db/models/Quiz');
-
+import {QuizQuestionMappingModel} from '../../db/models/QQMapping';
 var Quiz = models.QuizModel;
 
 var router = express.Router();
@@ -21,6 +21,20 @@ router.post('/', function (req, res) {
         language: req.body.language,
         minLevel: req.body.minLevel,
         quizMode:req.body.quizMode,
+        createdBy:req.body.createdBy,
+        createdDate:new Date()
+        }, 
+        function (err, quiz) {
+            if (err) return res.status(500).send("Error :"+JSON.stringify(err));
+            res.status(200).send(quiz);
+        });
+});
+
+// CREATES A NEW QUIZ-QUESTIONS MAPPING
+router.post('/map', function (req, res) {
+    QuizQuestionMappingModel.create({
+        quiz_id:req.body.quiz_id,
+        questions_ids:req.body.questions_ids,
         createdBy:req.body.createdBy,
         createdDate:new Date()
         }, 

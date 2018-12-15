@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var models = require('../../db/models/Question');
-
+import {QuizQuestionMappingModel} from '../../db/models/QQMapping';
 var Question = models.QuestionModel;
 var Option = models.OptionModel;
 
@@ -58,6 +58,26 @@ router.get('/u/(:arr)*', function (req, res) {
         function (err, questions) {
             if (err) return res.status(500).send("Error :"+JSON.stringify(err));
             res.status(200).send(questions);
+        });
+});
+
+//GET QUESTIONS BY QUIZ IDs
+router.get('/quiz/(:arr)*', function (req, res) {
+    var params= req.params[0].split('/');
+    var paramsArray = [req.params.arr.concat(params[0])].concat(params.slice(1,params.length));
+
+    QuizQuestionMappingModel.find({quiz_id : { $in: paramsArray }}, 
+         (err, mappings)=> {
+            if (err) return res.status(500).send("Error :"+JSON.stringify(err));
+            //fill Questons in mapping
+            mappings.forEach((item,index)=>{
+                Question.find({_id : { $in: item.questions_ids }}, 
+                    function (err, questions) {
+                        if (err) return res.status(500).send("Error :"+JSON.stringify(err));
+                        mappings[index].questions=questions;
+                    });
+            });
+            res.status(200).send(mappings);
         });
 });
 
