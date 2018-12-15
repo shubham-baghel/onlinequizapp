@@ -49,6 +49,18 @@ router.get('/s/(:arr)*', function (req, res) {
         });
 });
 
+//GET QUESTIONS BY USER
+router.get('/u/(:arr)*', function (req, res) {
+    var params= req.params[0].split('/');
+    var paramsArray = [req.params.arr.concat(params[0])].concat(params.slice(1,params.length));
+
+    Question.find({createdBy : { $in: paramsArray }}, 
+        function (err, questions) {
+            if (err) return res.status(500).send("Error :"+JSON.stringify(err));
+            res.status(200).send(questions);
+        });
+});
+
 //GET QUESTIONS BY TAGS
 router.get('/t/(:arr)*', function (req, res) {
     var params= req.params[0].split('/');

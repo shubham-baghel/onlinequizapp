@@ -52,7 +52,9 @@ export default class UserDashboard extends Component {
                             <div className="container-fluid text-left">
                                 {
                                     (this.state.quizList || []).map((q, index) => {
-                                        return (<div key={index}><label className={"label "+(this.state.clicked==index?"label-info":"label-default")} role={"button"} onClick={() => this.handleOnQuizClick(index)}>{q.name}</label></div>)
+                                        return (<div key={index}><label className={"label "+(this.state.clicked==index?"label-info":"label-default")} role={"button"} onClick={() => this.handleOnQuizClick(index)}>{q.name}</label>
+                                        <Link to="/q/show"><span><small>map questions</small></span></Link>
+                                        </div>)
                                     })
                                 }
                             </div>

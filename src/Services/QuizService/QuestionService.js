@@ -16,8 +16,17 @@ export default class QuestionService {
         });
     }
 
+    getQuestionsByUser(userId) {
+        userId=userId||this.loggedInUser;
+        return request({
+            url : `/api/questions/u/` + userId,
+            method: 'GET'
+        });
+    }
+
     postQuestion(questionData) {
         questionData.createdBy=this.loggedInUser;
+        console.log(questionData);
         return request({
             url : `/api/questions` ,
             method : 'POST',

@@ -8,7 +8,7 @@ export default class QuestionFormContainer extends Component {
         this.onHandleFormSubmit = this.onHandleFormSubmit.bind(this);
         this.onHandleAddNewQuestion = this.onHandleAddNewQuestion.bind(this);
 
-        this.questionService = new QuestionService();
+        this.questionService = new QuestionService("loggedUserxxx");
         this.state = {
             viewMode: false,
             questionFormData: {},
