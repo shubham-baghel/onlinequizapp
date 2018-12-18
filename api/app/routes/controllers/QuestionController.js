@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var models = require('../../db/models/Question');
-import {QuizQuestionMappingModel} from '../../db/models/QQMapping';
+var QuizQuestionMappingModel= require('../../db/models/QQMapping');
 var Question = models.QuestionModel;
 var Option = models.OptionModel;
 

@@ -66,25 +66,25 @@ export default class QuizStatus extends Component {
                             </label>):<label></label>
                     }
                    
-                    <div className="card-text mb-2">
+                    <div className="card-text">
                         {
                             this.props.quizData.map((ele, index) => {
-                                return (<div key={index} className='m-2 d-inline'>
-                                    <label role={this.props.dontallowjump ? null : "button"} onClick={this.props.dontallowjump ? null : () => this.props.handleOnQuestionStatusLabel(index)} className={(!this.props.userResponses[index] || this.props.userResponses[index].length == 0) ? "label label-default" : "label label-primary"} >{index + 1}</label>
+                                return (<div key={index} className='m-1 d-inline'>
+                                    <label role={this.props.dontallowjump ? null : "button"} onClick={this.props.dontallowjump ? null : () => this.props.handleOnQuestionStatusLabel(index)} className={(!this.props.userResponses[index] || this.props.userResponses[index].length == 0) ? "alert alert-info btn-sm" : "alert alert-success btn-sm"} >{index + 1}</label>
                                 </div>)
                             })
                         }
                     </div>
-                    <button disabled={this.props.dontallowjump && this.props.currentIndex < this.props.quizData.length - 1} onClick={this.props.handleFinishClick} className="btn btn-primary btn-sm">Finish</button>
+                    <button disabled={this.props.dontallowjump && this.props.currentIndex < this.props.quizData.length - 1} onClick={this.props.handleFinishClick} className="btn btn-primary col-sm">Finish</button>
                 </div>
                 <div className="card-body">
                     <h4 className="card-title">{FormatNumberLength(this.props.currentIndex + 1, 2)} / {FormatNumberLength(this.props.quizData.length, 2)}</h4>
                     <div className="card-text">
-                        <div className='m-2'>
-                            <label className="label label-default">Not Attempted</label>
+                        <div className='m-0'>
+                            <label className="alert alert-info col-sm">Not Attempted</label>
                         </div>
-                        <div className='m-2'>
-                            <label className="label label-primary">Attempted</label>
+                        <div className='m-0'>
+                            <label className="alert alert-success col-sm">Attempted</label>
                         </div>
                     </div>
                 </div>

@@ -111,20 +111,21 @@ export default class QuestionContainer extends Component {
         console.log(this.state.userResponses);
         return (
             <div className="container-fluid full-height-container">
-                <div className="row mb-2 mt-2">
-                    <div className="col-sm-2"></div>
-                    <div className="col-sm-6">
-                        <div className="row">
-                            <div className="col-sm-1">
-                                <PreviousButton onHandleClick={this.state.index > 0 ? this.handlePrevClick : () => { }} />
-                            </div>
-                            <div className="col-sm-10 p-0">
+                <div className="row mt-2 offset-1">
+                    <div className="col-sm-7 col-lg-7 col-xl-7">
+                        <div className="row mt-2">
+                            <div className="col-sm-10 col-lg-10 col-xl-10 p-0">
                                 <QuestionCard
                                     responses={this.state.userResponses[this.state.index] || []}
                                     question={this.state.currentQuestion}
                                     onOptionSelect={this.onOptionSelect} />
                             </div>
-                            <div className="col-sm-1">
+                        </div>
+                        <div className="row mt-2">
+                            <div className="col-sm-5 col-lg-5 col-xl-5">
+                                <PreviousButton onHandleClick={this.state.index > 0 ? this.handlePrevClick : () => { }} />
+                            </div>
+                            <div className="col-sm-5 col-lg-5 col-xl-5">
                                 {
                                     this.state.index < this.props.quizData.length - 1 ?
                                         (<NextButton onHandleClick={this.handleNextClick} />) :
@@ -133,7 +134,7 @@ export default class QuestionContainer extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-sm-2 p-0">
+                    <div className="col-sm-4 col-lg-4 col-xl-4 p-0">
                         <QuizStatus
                             QuizTimer={{
                                 allowTimer:this.props.allowTimer,
@@ -149,7 +150,6 @@ export default class QuestionContainer extends Component {
                             quizData={this.props.quizData}
                             userResponses={this.state.userResponses} />
                     </div>
-                    <div className="col-sm-2"></div>
                 </div>
             </div>
         )
