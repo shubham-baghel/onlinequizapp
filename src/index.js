@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import '../src/Content/css/bootstrap.min.css';
-import '../src/Content/css/bootstrap.3.3.6.min.css'
 import { BrowserRouter } from 'react-router-dom';
-
+import "jquery";
+import "popper.js";
+import "bootstrap";
 
 
 ReactDOM.render(
