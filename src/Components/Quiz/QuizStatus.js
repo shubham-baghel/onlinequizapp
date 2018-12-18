@@ -70,12 +70,12 @@ export default class QuizStatus extends Component {
                         {
                             this.props.quizData.map((ele, index) => {
                                 return (<div key={index} className='m-1 d-inline'>
-                                    <label role={this.props.dontallowjump ? null : "button"} onClick={this.props.dontallowjump ? null : () => this.props.handleOnQuestionStatusLabel(index)} className={(!this.props.userResponses[index] || this.props.userResponses[index].length == 0) ? "alert alert-info btn-sm" : "alert alert-success btn-sm"} >{index + 1}</label>
+                                    <label role={this.props.dontallowjump ? null : "button"} onClick={this.props.dontallowjump ? null : () => this.props.handleOnQuestionStatusLabel(index)} className={(!this.props.userResponses[index] || this.props.userResponses[index].length == 0) ? "alert-info btn-sm" : "alert-success btn-sm"} >{index + 1}</label>
                                 </div>)
                             })
                         }
                     </div>
-                    <button disabled={this.props.dontallowjump && this.props.currentIndex < this.props.quizData.length - 1} onClick={this.props.handleFinishClick} className="btn btn-primary col-sm">Finish</button>
+                    <button disabled={this.props.dontallowjump && this.props.currentIndex < this.props.quizData.length - 1} onClick={this.props.handleFinishClick} className="btn btn-primary col-sm mt-4">Finish</button>
                 </div>
                 <div className="card-body">
                     <h4 className="card-title">{FormatNumberLength(this.props.currentIndex + 1, 2)} / {FormatNumberLength(this.props.quizData.length, 2)}</h4>
