@@ -60,7 +60,8 @@ export default class SignUp extends Component {
 		return (
 			<div className="container">
 				<div className="row">
-					<div className="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+					<div className="col-xs-3 col-sm-3 col-md-3"></div>
+					<div className="col-xs-6 col-sm-6 col-md-6">
 						<form role="form" onSubmit={this.handleSubmit}>
 							<h2>Sign Up <small>It's free and always will be.</small></h2>
 							<hr className="colorgraph" />
@@ -107,6 +108,7 @@ export default class SignUp extends Component {
 							<div className="text-center m-2"><label className="label label-default">&copy;Quiz {new Date().getFullYear()}</label></div>
 						</form>
 					</div>
+					<div className="col-xs-3 col-sm-3 col-md-3"></div>
 				</div>
 			</div>
 		)

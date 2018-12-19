@@ -42,6 +42,16 @@ html, body, #root, #App, main {
   color: #147e9b !important;
 }
 
+.align-parent-bottom{
+  position: absolute !important;
+  bottom: 1px;
+  width: inherit !important;
+}
+
+.pb-120{
+  padding-bottom: 120px !important;
+}
+
 @keyframes App-logo-spin {
   50% {
     transform: rotate(60deg);
