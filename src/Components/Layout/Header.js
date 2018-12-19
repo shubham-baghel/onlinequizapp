@@ -14,28 +14,23 @@ class Header extends Component {
     
     render() {
         return (
-            <header>
-                <nav className="navbar navbar-expand-lg navbar-light App-header">
-                    <Link className="navbar-brand App-logo" to="/">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Link>
+            <header className="App-header">
+                <nav className="navbar navbar-expand-lg navbar-light">
+                    <Link className="navbar-brand App-logo" to="/"><big>Q</big></Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav mr-auto">
+                    <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                        <ul className="navbar-nav">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/quiz">Quiz</Link>
+                                <Link className="nav-link App-link" to="/quiz">Quiz</Link>
                             </li>
-                            <li className="nav-item dropdown">
-                                <span className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    User
-                               </span>
-                                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <Link className="dropdown-item App-link" to="/user_dashboard">Dashboard</Link>
-                                    <Link className="dropdown-item App-link" to="/">Link</Link>
-                                    <div className="dropdown-divider"></div>
-                                    <Link className="dropdown-item App-link" title="logout" to="/">Logout</Link>
-                                </div>
+                            <li className="nav-item">
+                                <Link className="nav-link App-link" to="/user_dashboard">Dashboard</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link App-link" title="logout" to="/">Logout</Link>
                             </li>
                         </ul>
                     </div>

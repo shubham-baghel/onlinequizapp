@@ -115,7 +115,7 @@ export default class QuestionContainer extends Component {
                 <div className="col-sm-1 col-lg-1 col-xl-1"></div>
                     <div className="col-sm-7 col-lg-7 col-xl-7 card m-1">
                         <div className="row mt-2">
-                            <div className="col-sm-10 col-lg-10 col-xl-10 p-0 m-1">
+                            <div className="col-sm-10 col-lg-10 col-xl-10 p-0 ml-1">
                                 <QuestionCard
                                     responses={this.state.userResponses[this.state.index] || []}
                                     question={this.state.currentQuestion}

@@ -7,8 +7,7 @@ class Footer extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-sm-2 text-left">
-                            <label className="label">&copy;Quiz {new Date().getFullYear()}</label><br />
-                            <label className="label">Quiz yourself in a way!</label>
+                            <label className="btn-sm">&copy;Quiz {new Date().getFullYear()}</label><br />
                         </div>
                     </div>
                 </div>

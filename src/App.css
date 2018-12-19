@@ -16,9 +16,9 @@ html, body, #root, #App, main {
   animation: App-logo-spin infinite 20s linear;
   margin-left: 2%;
   margin-right: 2%;
-  background-image: url('./logo.svg');
   background-position: 50% 50%;
   background-repeat:no-repeat;
+  color: #f0776c !important;
 }
 
 .App-header {
@@ -26,28 +26,28 @@ html, body, #root, #App, main {
   border-color:#e9eef0 !important;
   color: white !important;
   min-height: 8vh !important;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 .App-Footer {
   background-color: #e9eef0;
-  min-height: 10vh;
+  min-height: 8vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-top: 2px;
-  padding-top: 2px;
+  padding-top: 1px;
 }
 .App-link {
   color: #147e9b !important;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  50% {
+    transform: rotate(60deg);
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    transform: rotate(0deg);
   }
 }
 
