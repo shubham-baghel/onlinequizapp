@@ -5,3 +5,7 @@ export function FormatNumberLength(num, length) {
     }
     return r;
 }
+
+Array.prototype.remove = function remove(...forDeletion) {
+    return this.filter(item => !forDeletion.includes(item));
+}

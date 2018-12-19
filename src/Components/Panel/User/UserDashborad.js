@@ -38,22 +38,22 @@ export default class UserDashboard extends Component {
                     (<div className="row mt-4" >
                         <div className='col-sm-1'></div>
                         <div className='col-sm-3'>
-                            <div className="text-left ml-4">Quick Links</div>
+                            <div className="alert alert-info btn-sm">Quick Links</div>
                             <hr/>
                             <div className="container-fluid text-left">
-                                <div> <Link to="/quiz/add"><span><small>Add Quiz</small></span></Link></div>                                
-                                <div> <Link to="/q/add"><span><small>Add Question</small></span></Link></div>                                
+                                <div> <Link className="App-link" to="/quiz/add"><span>Add Quiz</span></Link></div>                                
+                                <div> <Link className="App-link" to="/q/add"><span>Add Question</span></Link></div>                                
                             </div>
                             <hr/>
                         </div>
                         <div className='col-sm-3'>
-                            <div className="text-left ml-4">Quizes</div>
+                            <div className="alert alert-info btn-sm">Quizes</div>
                             <hr/>
                             <div className="container-fluid text-left">
                                 {
                                     (this.state.quizList || []).map((q, index) => {
-                                        return (<div key={index}><label className={"label "+(this.state.clicked==index?"label-info":"label-default")} role={"button"} onClick={() => this.handleOnQuizClick(index)}>{q.name}</label>
-                                        <Link to="/q/show"><span><small>map questions</small></span></Link>
+                                        return (<div key={index}><span className={"btn-sm "+(this.state.clicked==index?"btn-light":"btn-link")} role={"button"} onClick={() => this.handleOnQuizClick(index)}>{q.name}</span>
+                                             <Link className="App-link" to="/q/show"><span><small>map questions</small></span></Link>
                                         </div>)
                                     })
                                 }
@@ -61,7 +61,7 @@ export default class UserDashboard extends Component {
                             <hr/>
                         </div>
                         <div className="col-sm-4">
-                             <div className="text-left ml-4">Quiz Detail</div>
+                             <div className="alert alert-info btn-sm">Quiz Detail</div>
                              <hr/>
                              {
                                  this.state.quizList.length==0?('No Quiz are added.'):

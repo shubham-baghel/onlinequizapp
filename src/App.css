@@ -52,6 +52,12 @@ html, body, #root, #App, main {
   padding-bottom: 120px !important;
 }
 
+input[type="checkbox"]{
+  width: 16px; /*Desired width*/
+  height: 16px; /*Desired height*/
+  cursor: pointer;
+}
+
 @keyframes App-logo-spin {
   50% {
     transform: rotate(60deg);
