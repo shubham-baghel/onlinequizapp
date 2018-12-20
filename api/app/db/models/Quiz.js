@@ -10,8 +10,11 @@ var QuizSchema = new mongoose.Schema({
     language: String,
     minLevel: Number,
     quizMode:Number,
+    quizDuration:Number,
     createdBy:String,
-    createdDate:Date
+    createdDate:Date,
+    modifiedBy:String,
+    mdifiedDate:Date
 });
 
 var Quiz = mongoose.model('Quiz', QuizSchema);

@@ -49,11 +49,13 @@ export default class UserDashboard extends Component {
                         <div className='col-sm-3'>
                             <div className="alert alert-info btn-sm">Quizes</div>
                             <hr/>
+                            {this.state.quizList.length==0?('No Quizes are added.'):('')}
                             <div className="container-fluid text-left">
                                 {
+                                     
                                     (this.state.quizList || []).map((q, index) => {
                                         return (<div key={index}><span className={"btn-sm "+(this.state.clicked==index?"btn-light":"btn-link")} role={"button"} onClick={() => this.handleOnQuizClick(index)}>{q.name}</span>
-                                             <Link className="App-link" to="/q/show"><span><small>map questions</small></span></Link>
+                                          
                                         </div>)
                                     })
                                 }
@@ -64,17 +66,34 @@ export default class UserDashboard extends Component {
                              <div className="alert alert-info btn-sm">Quiz Detail</div>
                              <hr/>
                              {
-                                 this.state.quizList.length==0?('No Quiz are added.'):
+                                 this.state.quizList.length==0?('No Quiesz are added.'):
                                  (
+                                <div>
+                                <div className="container-fluid">
+                                    <div className="row">
+                                        <div className="col-sm-6">
+                                            <Link className="App-link" to={"/q/show/"+this.state.quizList[this.state.clicked]._id}><span>map questions</span></Link>
+                                        </div>
+                                        <div className="col-sm-6">
+                                            <Link className="App-link" to="/"><span>delete</span></Link>
+                                        </div>
+                                    </div>
+                                </div>
+                               <hr/>
                                 <div className="container-fluid text-left">
-                                <div>Quiz Name - {this.state.quizList[this.state.clicked].name}</div>
-                                <div>Quiz Mode - {this.state.quizList[this.state.clicked].quizMode}</div>
-                                <div>No of Questions - {this.state.quizList[this.state.clicked].numOfQuestions}</div>
-                                <div>Quiz Min Level - {this.state.quizList[this.state.clicked].minLevel}</div>
-                                <div>Quiz Language - {this.state.quizList[this.state.clicked].language}</div>
-                                <div>Quiz Subjects - {(this.state.quizList[this.state.clicked].subjects||[]).join(', ')}</div>
-                                <div>Quiz Tags - {(this.state.quizList[this.state.clicked].tags||[]).join(', ')}</div>
-                                <div>Created On - {this.state.quizList[this.state.clicked].createdDate}</div>
+                                    <div>Quiz Name - {this.state.quizList[this.state.clicked].name}</div>
+                                    <div>Quiz Mode - {this.state.quizList[this.state.clicked].quizMode}</div>
+                                    <div>Quiz Duration - {this.state.quizList[this.state.clicked].quizDuration}</div>
+                                    <div>No of Questions - {this.state.quizList[this.state.clicked].numOfQuestions}</div>
+                                    <div>Quiz Min Level - {this.state.quizList[this.state.clicked].minLevel}</div>
+                                    <div>Quiz Language - {this.state.quizList[this.state.clicked].language}</div>
+                                    <div>Quiz Subjects - {(this.state.quizList[this.state.clicked].subjects||[]).join(', ')}</div>
+                                    <div>Quiz Tags - {(this.state.quizList[this.state.clicked].tags||[]).join(', ')}</div>
+                                    <div>Modified On - {this.state.quizList[this.state.clicked].modifiedDate}</div>
+                                    <div>Modified By - {this.state.quizList[this.state.clicked].modifiedBy}</div>
+                                    <div>Created On - {this.state.quizList[this.state.clicked].createdDate}</div>
+                                    <div>Created By - {this.state.quizList[this.state.clicked].createdBy}</div>
+                                 </div>
                                  </div>
                                  )
                              }

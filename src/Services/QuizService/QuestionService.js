@@ -42,12 +42,30 @@ export default class QuestionService {
         });
     }
 
+    saveQuizMapping(mappingData) {
+        mappingData.createdBy=this.loggedInUser;
+        mappingData.modifiedBy=this.loggedInUser;
+        return request({
+            url : `/api/quizes/map`,
+            method: 'POST',
+            data : mappingData
+        });
+    }
+
     postQuiz(quizData) {
         quizData.createdBy=this.loggedInUser;
         return request({
             url : `/api/quizes` ,
             method : 'POST',
             data : quizData
+        });
+    }
+
+    getQuizCompleteDetail(quiz_id) {
+      
+        return request({
+            url : `/api/quizes/detail/`+quiz_id,
+            method : 'GET'
         });
     }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import QuestionForm from './QuestionForm';
 import QuestionService from '../../Services/QuizService/QuestionService';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 export default class QuestionFormContainer extends Component {
     constructor(props) {
@@ -18,6 +19,7 @@ export default class QuestionFormContainer extends Component {
     }
 
     onHandleFormSubmit(questionFormData) {
+        var returnUrl=this.props.match.params.returnUrl;
         this.questionService.postQuestion(questionFormData).then(res => {
             console.log(res);
             this.setState({isMsg:true,message:'Question added successfully.', viewMode: true, questionFormData: questionFormData });
@@ -27,26 +29,30 @@ export default class QuestionFormContainer extends Component {
                 this.setState({isMsg:true,message:'Some error occured while adding question.', viewMode: false, questionFormData: questionFormData });
             });
     }
+
     onHandleAddNewQuestion(e) {
         this.setState({isMsg:false, viewMode: false, questionFormData: {} });
     }
     render() {
+        console.log(this.props.match.params.returnUrl);
         return (
             <div className="container-fluid full-height-container">
-                <div className="row mb-2 mt-2" >
-                    <div className='col-sm-2'></div>
-                    <div className="col-sm-8 card pt-3">
-                        <QuestionForm questionModel={this.state.questionFormData}
-                            maxOptions={(this.state.questionFormData.options||[]).length}
-                            onAddNewQuestion={this.onHandleAddNewQuestion}
-                            viewMode={this.state.viewMode}
-                            onFormSubmit={this.onHandleFormSubmit}
-                            isMsg={this.state.isMsg}
-                            message={this.state.message}
-                        />
-                    </div>
-                    <div className='col-sm-2'></div>
-                </div>
+                { (this.state.viewMode && this.props.match.params.returnUrl && this.props.match.params.returnUrl)!=''?<Redirect to={decodeURIComponent(this.props.match.params.returnUrl)} />:
+                    (<div className="row mb-2 mt-2" >
+                        <div className='col-sm-2'></div>
+                        <div className="col-sm-8 card pt-3">
+                            <QuestionForm questionModel={this.state.questionFormData}
+                                maxOptions={(this.state.questionFormData.options||[]).length}
+                                onAddNewQuestion={this.onHandleAddNewQuestion}
+                                viewMode={this.state.viewMode}
+                                onFormSubmit={this.onHandleFormSubmit}
+                                isMsg={this.state.isMsg}
+                                message={this.state.message}
+                            />
+                        </div>
+                        <div className='col-sm-2'></div>
+                    </div>)
+                }
             </div>
         );
     }
