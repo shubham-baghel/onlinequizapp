@@ -109,7 +109,7 @@ export default class QuestionsView extends Component {
                             <hr />
                             <div className="container-fluid text-left">
                                 <div> <Link className="App-link" to="/quiz/add"><span>Add Quiz</span></Link></div>
-                                <div> <Link className="App-link" to={"/q/add/"+encodeURIComponent(window.location.pathname)}><span>Add Question</span></Link></div>
+                                <div> <Link className="App-link" to={"/q/add?url="+encodeURIComponent(window.location.pathname)}><span>Add Question</span></Link></div>
                             </div>
                             <hr />
                         </div>

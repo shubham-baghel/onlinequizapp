@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import QuestionForm from './QuestionForm';
 import QuestionService from '../../Services/QuizService/QuestionService';
 import { Switch, Route, Redirect } from 'react-router-dom';
+var parse = require('url-parse')
 
 export default class QuestionFormContainer extends Component {
     constructor(props) {
@@ -14,12 +15,17 @@ export default class QuestionFormContainer extends Component {
             viewMode: false,
             questionFormData: {},
             isMsg:false,
-            message:''
+            message:'',
+            query:{}
         }
     }
 
+    componentWillMount(){
+        this.state.query=parse(this.props.location.search,true).query;
+    }
+
     onHandleFormSubmit(questionFormData) {
-        var returnUrl=this.props.match.params.returnUrl;
+       
         this.questionService.postQuestion(questionFormData).then(res => {
             console.log(res);
             this.setState({isMsg:true,message:'Question added successfully.', viewMode: true, questionFormData: questionFormData });
@@ -33,11 +39,12 @@ export default class QuestionFormContainer extends Component {
     onHandleAddNewQuestion(e) {
         this.setState({isMsg:false, viewMode: false, questionFormData: {} });
     }
+
     render() {
-        console.log(this.props.match.params.returnUrl);
+        console.log(this.state.query);
         return (
             <div className="container-fluid full-height-container">
-                { (this.state.viewMode && this.props.match.params.returnUrl && this.props.match.params.returnUrl)!=''?<Redirect to={decodeURIComponent(this.props.match.params.returnUrl)} />:
+                { (this.state.viewMode && this.state.query.url && this.state.query.url)!=''?<Redirect to={decodeURIComponent(this.state.query.url)} />:
                     (<div className="row mb-2 mt-2" >
                         <div className='col-sm-2'></div>
                         <div className="col-sm-8 card pt-3">

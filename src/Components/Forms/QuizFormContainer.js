@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import QuizForm from './QuizForm';
 import QuestionService from '../../Services/QuizService/QuestionService';
+import { Redirect } from 'react-router-dom';
+var parse = require('url-parse');
 
 export default class QuizFormContainer extends Component {
     constructor(props) {
@@ -13,8 +15,13 @@ export default class QuizFormContainer extends Component {
             viewMode: false,
             quizFomData: {},
             isMsg:false,
-            message:''
+            message:'',
+            query:{},
         }
+    }
+
+    componentWillMount(){
+        this.state.query=parse(this.props.location.search,true).query;
     }
 
     onHandleFormSubmit(quizFomData) {
@@ -35,6 +42,7 @@ export default class QuizFormContainer extends Component {
     render() {
         return (
             <div className="container-fluid full-height-container">
+                { (this.state.viewMode && this.state.query.url && this.state.query.url)!=''?<Redirect to={decodeURIComponent(this.state.query.url)} />:('')}
                 <div className="row mb-2" >
                     <div className='col-sm-3'></div>
                     <div className="col-sm-6">
