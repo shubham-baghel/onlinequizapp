@@ -7,6 +7,7 @@ export default class UserDashboard extends Component {
     constructor(props) {
         super(props);
         this.handleOnQuizClick = this.handleOnQuizClick.bind(this);
+        this.deleteQuiz=this.deleteQuiz.bind(this);
 
         this.questionService = new QuestionService("loggedUserxxx");
         this.state = {
@@ -21,7 +22,7 @@ export default class UserDashboard extends Component {
         this.questionService.getQuizByUser()
             .then(quizes => {
                 console.log(quizes);
-                this.setState({ quizList: quizes, loading: false });
+                this.setState({ quizList: quizes, loading: false, clicked:0 });
             })
             .catch(err => {
                 console.log(err);
@@ -30,6 +31,20 @@ export default class UserDashboard extends Component {
 
     handleOnQuizClick(index) {
         this.setState({ clicked: index });
+    }
+
+    deleteQuiz(e,quiz_id){
+        e.preventDefault();
+        if (window.confirm("Are you sure? you want to delete Quiz.")) {
+            this.questionService.deleteQuizs([quiz_id])
+            .then(res => {
+                console.log(res);
+                this.componentWillMount();//Again load
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        } 
     }
 
     render() {
@@ -50,7 +65,7 @@ export default class UserDashboard extends Component {
                                         <div > <Link className="App-link" to={"/q/show/" + this.state.quizList[this.state.clicked]._id}><span>map questions</span></Link></div>
                                         <div> <Link className="App-link" to="/"><span>modify</span></Link></div>
                                         <div>  <Link className="App-link" to={"/quiz?am="+ATTEMPT_MODE.VIEW+"&qz_id=" + this.state.quizList[this.state.clicked]._id}><span>Quiz View</span></Link></div>
-                                        <div> <Link className="App-link" to="/"><span>delete</span></Link></div>
+                                        <div> <a href="/" className="App-link"><span onClick={(e)=>this.deleteQuiz(e,this.state.quizList[this.state.clicked]._id)}>delete</span></a></div>
                                     </div>
                                     ):('')
                                 }

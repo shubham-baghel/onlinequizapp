@@ -13,7 +13,7 @@ import QuestionsView from './Panel/User/QuizMapping';
 class Routing extends Component {
     render(){
         return(
-            <div>
+            <div className="fadein-effect">
                 <Switch>
                     <Route exact path='/' component={Home} />
                     <Route exact path='/quiz' component={QuizContainer} />

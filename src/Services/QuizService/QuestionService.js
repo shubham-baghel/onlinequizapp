@@ -61,6 +61,15 @@ export default class QuestionService {
         });
     }
 
+    deleteQuizs(quiz_ids) {
+        var user=this.loggedInUser;
+        return request({
+            url : `/api/quizes/delete` ,
+            method : 'POST',
+            data : {quiz_ids:quiz_ids,modifiedBy:user}
+        });
+    }
+
     getQuizCompleteDetail(quiz_id) {
       
         return request({

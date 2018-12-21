@@ -49,6 +49,24 @@ router.post('/', function (req, res)
   
 });
 
+// DELETE QUIZes
+router.post('/delete', function (req, res) 
+{
+    var quiz_ids=req.body.quiz_ids;
+    if(quiz_ids && quiz_ids.length>0)
+    {
+        Quiz.remove({_id: {$in:quiz_ids}}, 
+            function (err, quiz) {
+                if (err) return res.status(500).send("Error :"+JSON.stringify(err));
+                QuizQuestionMappingModel.remove({quiz_id :{$in:quiz_ids}},
+                    function (err, mapping) {
+                        if (err) return res.status(500).send("Error :"+JSON.stringify(err));
+                        res.status(200).send({status:true,data:"deleted "+JSON.stringify(quiz_ids)});
+                    });
+            });
+    }
+});
+
 // CREATES/Update A NEW QUIZ-QUESTIONS MAPPING
 router.post('/map', function (req, res) {
     QuizQuestionMappingModel.find({quiz_id:req.body.quiz_id}, 
