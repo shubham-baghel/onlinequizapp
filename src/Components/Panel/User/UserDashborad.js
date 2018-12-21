@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import QuestionService from '../../../Services/QuizService/QuestionService';
 import { Link } from 'react-router-dom';
-import {ATTEMPT_MODE} from '../../../AppConstant';
 
 export default class UserDashboard extends Component {
     constructor(props) {
@@ -63,9 +62,8 @@ export default class UserDashboard extends Component {
                                     (this.state.quizList || []).length>0?(
                                         <div className="alert single-line-wrap">Selected: <span>{this.state.quizList[this.state.clicked].name}</span>
                                         <div > <Link className="App-link" to={"/q/show/" + this.state.quizList[this.state.clicked]._id}><span>map questions</span></Link></div>
-                                        <div> <Link className="App-link" to="/"><span>modify</span></Link></div>
-                                        <div>  <Link className="App-link" to={"/quiz?am="+ATTEMPT_MODE.VIEW+"&qz_id=" + this.state.quizList[this.state.clicked]._id}><span>Quiz View</span></Link></div>
-                                        <div> <a href="/" className="App-link"><span onClick={(e)=>this.deleteQuiz(e,this.state.quizList[this.state.clicked]._id)}>delete</span></a></div>
+                                        <div> <Link className="App-link" to="/"><span>modify quiz</span></Link></div>
+                                        <div> <a href="/" className="App-link"><span onClick={(e)=>this.deleteQuiz(e,this.state.quizList[this.state.clicked]._id)}>delete quiz</span></a></div>
                                     </div>
                                     ):('')
                                 }

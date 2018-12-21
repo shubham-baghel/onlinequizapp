@@ -15,22 +15,21 @@ export default class QuestionFormContainer extends Component {
             viewMode: false,
             questionFormData: {},
             isMsg:false,
-            message:'',
-            query:{}
+            message:''
         }
-    }
-
-    componentWillMount(){
-        this.state.query=parse(this.props.location.search,true).query;
     }
 
     onHandleFormSubmit(questionFormData) {
        
         this.questionService.postQuestion(questionFormData).then(res => {
             console.log(res);
-            this.setState({isMsg:true,message:'Question added successfully.', viewMode: true, questionFormData: questionFormData });
-        })
-            .catch(err => {
+            var query=parse(this.props.location.search,true).query;
+            if(query.url && query.url!=null&& query.url!=''){
+                this.props.history.push(decodeURIComponent(query.url));
+            }else{
+                this.setState({isMsg:true,message:'Question added successfully.', viewMode: true, questionFormData: questionFormData });
+            }
+        }).catch(err => {
                 console.log(err);
                 this.setState({isMsg:true,message:'Some error occured while adding question.', viewMode: false, questionFormData: questionFormData });
             });
@@ -44,10 +43,9 @@ export default class QuestionFormContainer extends Component {
         console.log(this.state.query);
         return (
             <div className="container-fluid full-height-container">
-                { (this.state.viewMode && this.state.query.url && this.state.query.url)!=''?<Redirect to={decodeURIComponent(this.state.query.url)} />:
-                    (<div className="row mb-2 mt-2" >
+                <div className="row mb-2 mt-2" >
                         <div className='col-sm-2'></div>
-                        <div className="col-sm-8 card pt-3">
+                        <div className="col-sm-8 pt-3">
                             <QuestionForm questionModel={this.state.questionFormData}
                                 maxOptions={(this.state.questionFormData.options||[]).length}
                                 onAddNewQuestion={this.onHandleAddNewQuestion}
@@ -58,8 +56,7 @@ export default class QuestionFormContainer extends Component {
                             />
                         </div>
                         <div className='col-sm-2'></div>
-                    </div>)
-                }
+                    </div>
             </div>
         );
     }

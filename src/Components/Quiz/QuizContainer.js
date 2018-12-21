@@ -1,7 +1,6 @@
 'use strict';
-import React, {Component} from 'react'
-import QuestionContainer from './QuestionContainer'
-
+import React, {Component} from 'react';
+import QuestionContainer from './QuestionContainer';
 import QuestionService from '../../Services/QuizService/QuestionService';
 import RevisitForm from './RevisitForm';
 import QuizResult from './QuizResult';

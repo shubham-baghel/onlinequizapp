@@ -109,8 +109,8 @@ export default class QuestionsView extends Component {
                             <div className="alert alert-info btn-sm">Quick Links</div>
                             <hr />
                             <div className="container-fluid text-left">
-                                <div> <Link className="App-link" to={"/quiz?am="+ATTEMPT_MODE.VIEW+"&qz_id="+this.props.match.params._quiz_id}><span>Quiz View</span></Link></div>
-                                <div> <Link className="App-link" to={"/quiz?am="+ATTEMPT_MODE.ASSESS+"&qz_id="+this.props.match.params._quiz_id}><span>Quiz Test</span></Link></div>
+                                <div> <Link className="App-link" to={(this.state.questionsListMapped || []).length==0?'?':"/quiz?am="+ATTEMPT_MODE.VIEW+"&qz_id="+this.props.match.params._quiz_id}><span>Quiz View</span></Link></div>
+                                <div> <Link className="App-link" to={(this.state.questionsListMapped || []).length==0?'?':"/quiz?am="+ATTEMPT_MODE.ASSESS+"&qz_id="+this.props.match.params._quiz_id}><span>Quiz Test</span></Link></div>
                                 <div> <Link className="App-link" to={"/quiz/add?url="+encodeURIComponent(window.location.pathname)}><span>Add Quiz</span></Link></div>
                                 <div> <Link className="App-link" to={"/q/add?url="+encodeURIComponent(window.location.pathname)}><span>Add Question</span></Link></div>
                             </div>

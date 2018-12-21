@@ -181,57 +181,50 @@ export default class QuestionForm extends Component {
     }
 
     render() {
-        const defaultSubjects=['Select','General','Physics','Chemistry','Mathematics']
         return (
             <div className="container-fluid">
+                <div className="">
+                    <h3>Add Question <small> provide question details</small></h3>
+                    <hr className=" colorgraph"></hr>
+                </div>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group row">
-                        <div className="col-sm-1">
-                            <label className=''><span className="glyphicon glyphicon-hand-right"></span></label>
-                        </div>
-                        <div className="col-sm-1">
-                            <label className='label label-default display-4' htmlFor="question">Question</label>
-                        </div>
                         <div className="col-sm-1"></div>
-                        <div className="col-sm-8">
+                        <div className="col-sm-10">
                             <textarea disabled={this.props.viewMode || false} required={true} onChange={this.onFormInputQuestionChange} className="form-control" id="question" value={this.state.question} placeholder="Enter question here" />
                         </div>
                     </div>
                     {
                         this.state.options.map((val, index) => {
                             return (
-                                <div className="form-group row" key={index + 1}>
-                                    <div className="col-sm-1"></div>
-                                    <div className="col-sm-1">
-                                        <label className='label label-default' htmlFor={"option" + index + 1}> Option {index + 1} </label>
-                                    </div>
-                                    <div className="col-sm-1">
+                                <div className="form-group row d-table-row" key={index + 1}>
+                                    <div className="col-sm-1 d-table-cell float-left ml-0 mr-0 pl-0 pr-0">
                                         {
                                             index == this.state.minoptions - 1 ?
-                                                (<button disabled={this.props.viewMode || false} title="add more options" type="button" className="btn btn-sm btn-light ml-3" onClick={() => this.onAddMoreOption(this.state.options.length + 1)}>
-                                                    <span className="glyphicon glyphicon-plus" aria-hidden="true"></span></button>)
+                                                (<button disabled={this.props.viewMode || false} title="add more options" type="button" className="btn btn-info" onClick={() => this.onAddMoreOption(this.state.options.length + 1)}>
+                                                    <span className="" aria-hidden="true">+</span></button>)
                                                 : ('')
 
                                         }
                                         {
                                             index > this.state.minoptions - 1 ?
-                                                (<button disabled={this.props.viewMode || false} title="remove this option" type="button" className="btn btn-sm btn-light ml-3" onClick={() => this.onRemoveOption(index + 1)}>
-                                                    <span className="glyphicon glyphicon-minus" aria-hidden="true"></span></button>)
+                                                (<button disabled={this.props.viewMode || false} title="remove this option" type="button" className="btn btn-info" onClick={() => this.onRemoveOption(index + 1)}>
+                                                    <span className="" aria-hidden="true">-</span></button>)
                                                 : ('')
 
                                         }
                                     </div>
-                                    <div className="col-sm-8">
-                                        <input disabled={this.props.viewMode || false} required={true} value={val.o} onChange={(e) => this.onFormInputOptionChange(e, index + 1)} type="text" className="form-control" id={"option" + index + 1} placeholder="Enter option here" />
+                                    <div className="col-sm-10 d-table-cell mr-0 pr-0">
+                                        <input disabled={this.props.viewMode || false} required={true} value={val.o} onChange={(e) => this.onFormInputOptionChange(e, index + 1)} type="text" className="form-control" id={"option" + index + 1} placeholder={"Enter option"+(index + 1)+" here"} />
                                     </div>
-                                    <div className="col-sm-1">
+                                    <div className="col-sm-1 d-table-cell">
                                         {
                                             this.state.answers.filter((op) => op.id == val.id).length > 0 ?
-                                                (<button disabled={this.props.viewMode || false} type="button" className="btn btn-sm btn-light" onClick={() => this.onMarkAnswer(index + 1, false)}>
-                                                    <span className="glyphicon glyphicon-saved" aria-hidden="true"></span>
+                                                (<button disabled={this.props.viewMode || false} type="button" className="btn  btn-info" onClick={() => this.onMarkAnswer(index + 1, false)}>
+                                                    <span className="" aria-hidden="true">o</span>
                                                 </button>) :
-                                                (<button disabled={(this.props.viewMode || false) || val.o == ""} type="button" className="btn btn-sm btn-light" onClick={() => this.onMarkAnswer(index + 1, true)}>
-                                                    <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                                (<button disabled={(this.props.viewMode || false) || val.o == ""} type="button" className="btn  btn-dark" onClick={() => this.onMarkAnswer(index + 1, true)}>
+                                                    <span className="" aria-hidden="true">o</span>
                                                 </button>)
                                         }
                                     </div>
@@ -239,19 +232,14 @@ export default class QuestionForm extends Component {
                             )
                         })
                     }
-                    <div className="form-group row">
+                    <div className="form-group row mt-3">
                         <div className="col-sm-1"></div>
-                        <div className="col-sm-1">
-                            <label className='label label-default' htmlFor="subject">Subjects</label>
-                        </div>
-                        <div className="col-sm-1"></div>
-                        <div className="col-sm-8">
-                        <select required={true} disabled={this.props.viewMode || false} className="form-control" id="subject" onChange={this.onFormInputSubjectChange}>
-                                {
-                                    defaultSubjects.map((val,index)=>{
-                                        return (<option key={index} value={val}>{val}</option>)
-                                    })
-                                }
+                        <div className="col-sm-10">
+                        <select required={true} value="General" disabled={this.props.viewMode || false} className="form-control" id="subject" onChange={this.onFormInputSubjectChange}>
+                                <option value={"General"}>Select subjects</option>
+                                <option value={"Politics"}>Politics</option>
+                                <option value={"Mathematics"}>Mathematics</option>
+                                <option value={"Arts"}>Arts</option>
                             </select>
                         </div>
                     </div>
@@ -259,15 +247,12 @@ export default class QuestionForm extends Component {
                         (this.state.subjects || []).length > 0 ?
                             (<div className="form-group row">
                                 <div className="col-sm-1"></div>
-                                <div className="col-sm-1">
-                                </div>
-                                <div className="col-sm-1"></div>
-                                <div className="col-sm-9 text-left">
+                                <div className="col-sm-10 text-left">
                                     {
                                         (this.state.subjects || []).map((val, index) => {
-                                            return (<div key={index} className="label label-info mr-2 pr-2 card">
+                                            return (<div key={index} className="d-inline-block ml-2">
                                                 <span>{val}</span>&nbsp;&nbsp;
-                                                <span value={val} role="button" onClick={()=>this.onSubjectRemove(val)} className="glyphicon glyphicon-remove"></span>
+                                                <span value={val} role="button" onClick={()=>this.onSubjectRemove(val)}>X</span>
                                             </div>)
                                         })
                                     }
@@ -276,27 +261,20 @@ export default class QuestionForm extends Component {
                     }
                     <div className="form-group row">
                         <div className="col-sm-1"></div>
-                        <div className="col-sm-1">
-                            <label className='label label-default' htmlFor="tags">Tags</label>
-                        </div>
-                        <div className="col-sm-1"></div>
-                        <div className="col-sm-8">
-                            <input disabled={this.props.viewMode || false} onKeyPress={this.onFormInputTagChange} className="form-control" id="tags" placeholder="Enter tag here" />
+                        <div className="col-sm-10">
+                            <input disabled={this.props.viewMode || false} onKeyPress={this.onFormInputTagChange} className="form-control" id="tags" placeholder="Enter tags here" />
                         </div>
                     </div>
                     {
                         (this.state.tags || []).length > 0 ?
                             (<div className="form-group row">
                                 <div className="col-sm-1"></div>
-                                <div className="col-sm-1">
-                                </div>
-                                <div className="col-sm-1"></div>
-                                <div className="col-sm-9 text-left">
+                                <div className="col-sm-10 text-left">
                                     {
                                         (this.state.tags || []).map((val, index) => {
-                                            return (<div key={index} className="label label-info mr-2 pr-2 card">
+                                            return (<div key={index} className="d-inline-block ml-2">
                                                 <span>{val}&nbsp;&nbsp;</span>
-                                                <span value={val} role="button" onClick={()=>this.onTagRemove(val)} className="glyphicon glyphicon-remove"></span>
+                                                <span value={val} role="button" onClick={()=>this.onTagRemove(val)}>X</span>
                                             </div>)
                                         })
                                     }
@@ -305,12 +283,9 @@ export default class QuestionForm extends Component {
                     }
                     <div className="form-group row">
                         <div className="col-sm-1"></div>
-                        <div className="col-sm-1">
-                            <label className='label label-default' htmlFor="level">Level</label>
-                        </div>
-                        <div className="col-sm-1"></div>
-                        <div className="col-sm-8">
+                        <div className="col-sm-10">
                             <select required={true} disabled={this.props.viewMode || false} value={this.state.level || 1} className="form-control" id="level" onChange={this.onFormQuestionLevelChange}>
+                                <option value={0}>Select quiz level</option>
                                 <option value={1}>Easy</option>
                                 <option value={2}>Walking</option>
                                 <option value={3}>Medium</option>
@@ -321,12 +296,9 @@ export default class QuestionForm extends Component {
                     </div>
                     <div className="form-group row">
                         <div className="col-sm-1"></div>
-                        <div className="col-sm-1">
-                            <label className='label label-default' htmlFor="language">Language</label>
-                        </div>
-                        <div className="col-sm-1"></div>
-                        <div className="col-sm-8">
+                        <div className="col-sm-10">
                             <select required={true} disabled={this.props.viewMode || false} value={this.state.language || 'English'} className="form-control" id="language" onChange={this.onFormLanguageChange}>
+                                <option value="">Select language</option>
                                 <option value="English">English</option>
                                 <option value="Hindi">हिन्दी</option>
                             </select>
@@ -335,28 +307,27 @@ export default class QuestionForm extends Component {
                     {
                         (this.state.isError || false) || (this.props.isMsg || false) ?
                             (<div className="form-group row">
-                                <div className="col-sm-1"></div>
-                                <div className="col-sm-1"></div>
-                                <div className="col-sm-1"></div>
+                                <div className="col-sm-2"></div>
                                 <div className="col-sm-8">
                                     {
                                         (this.state.isError || false) ?
-                                            (<h4><label className='label label-danger'>{this.state.message}</label></h4>) :
-                                            (<h4><label className='label label-success'>{this.props.message || ''}</label></h4>)
+                                            (<h4><label className='alert btn-sm alert-danger'>{this.state.message}</label></h4>) :
+                                            (<h4><label className='alert btn-sm alert-success'>{this.props.message || ''}</label></h4>)
                                     }
                                 </div>
                             </div>) : ''
                     }
                     {this.state.isError = false}
+                    <div className=""><hr className="colorgraph"></hr></div>
                     <div className="form-group row">
-                        <div className="col-sm-1"></div>
-                        <div className="col-sm-1">
-                            {
+                         <div className="col-sm-1"></div>
+                         <div className="col-sm-10">
+                         {
                                 (this.props.viewMode || false) ?
                                     (<button id="addnew" type="button" onClick={this.handleonAddNewQuestion} className="btn btn-info">Add More</button>) :
-                                    (<button id="sunmit" type="submit" className="btn btn-primary">Submit</button>)
-                            }
-                        </div>
+                                    (<button id="submit" type="submit" className="btn btn-primary btn-block">Submit</button>)
+                        }
+                         </div>
                     </div>
 
                 </form>

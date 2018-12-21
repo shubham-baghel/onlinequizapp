@@ -8,6 +8,7 @@ export default class QuizForm extends Component {
         this.onFormQuizNameChange=this.onFormQuizNameChange.bind(this);
         this.onFormQuizModeChange=this.onFormQuizModeChange.bind(this);
         this.onQuizNumOfQuestionsChange=this.onQuizNumOfQuestionsChange.bind(this);
+        this.onFormQuizDurationChange=this.onFormQuizDurationChange.bind(this);
         this.onFormInputSubjectChange = this.onFormInputSubjectChange.bind(this);
         this.onFormInputTagChange = this.onFormInputTagChange.bind(this);
         this.handleonAddNewQuiz = this.handleonAddNewQuiz.bind(this);
@@ -27,12 +28,13 @@ export default class QuizForm extends Component {
         let stateObject = {
             _id: quizModel._id || '',
             name: quizModel.name || '',
-            numOfQuestions: quizModel.numOfQuestions||5,
+            numOfQuestions: quizModel.numOfQuestions||10,
             subjects: quizModel.subjects || ['General'],
             tags: quizModel.tags || [],
             language: quizModel.language || 'English',
             minLevel: quizModel.minLevel || 1,
             quizMode:quizModel.quizMode||1, //1 - dynamic, 2- mapping
+            quizDuration:quizModel.quizDuration||0
         };
 
         if (initial || false) {
@@ -47,12 +49,13 @@ export default class QuizForm extends Component {
         this.props.onFormSubmit({
             _id: this.state._id,
             name: this.state.name,
-            numOfQuestions: this.state.numOfQuestions,
+            numOfQuestions: parseInt(this.state.numOfQuestions)||10,
             subjects: this.state.subjects,
             tags: this.state.tags,
             language: this.state.language,
-            minLevel: this.state.minLevel,
-            quizMode:this.state.quizMode
+            minLevel: parseInt(this.state.minLevel),
+            quizMode:this.state.quizMode,
+            quizDuration:parseInt(this.state.quizDuration)||10
         });
     }
 
@@ -72,8 +75,19 @@ export default class QuizForm extends Component {
         this.setState({ quizMode: q });
     }
 
+    onFormQuizDurationChange(e){
+        let q = e.target.value;
+        if(q=="+5"){
+            q=parseInt(this.state.quizDuration)+5;
+        }
+        this.setState({ quizDuration: q });
+    }
+
     onQuizNumOfQuestionsChange(e){
         let q = e.target.value;
+        if(q=="+5"){
+            q= parseInt(this.state.numOfQuestions)+5;
+        }
         this.setState({ numOfQuestions: q });
     }
 
@@ -146,7 +160,7 @@ export default class QuizForm extends Component {
                     <div className="row">
                         <div className="form-group col-sm-12">
                             <select required={true} disabled={this.props.viewMode || false} value={this.state.quizMode || "1"} className="form-control" id="quizmode" onChange={this.onFormQuizModeChange}>
-                                <option value={null}>Select quiz mode</option>
+                                <option value={"1"}>Select quiz mode</option>
                                 <option value="1">Automatic - will generate questions automatically</option>
                                 <option value="2">Manualy - you need to add questions</option>
                             </select>
@@ -154,13 +168,26 @@ export default class QuizForm extends Component {
                     </div>
                     <div className="row">
                         <div className="form-group col-sm-12">
-                            <select required={true} disabled={this.props.viewMode || false} value={this.state.numOfQuestions || 10} className="form-control" id="numOfQuestions" onChange={this.onQuizNumOfQuestionsChange}>
-                                <option value={null}>Number of questions</option>
-                                <option value={5}>5</option>
-                                <option value={10}>10</option>
-                                <option value={15}>15</option>
+                            <select required={true} disabled={this.props.viewMode || false} value={this.state.quizDuration || 10} className="form-control" id="quizduration" onChange={this.onFormQuizDurationChange}>
+                                <option value={0}>Select quiz duration(minute)</option>
+                                <option value={this.state.quizDuration}>{this.state.quizDuration}</option>
+                                <option value={5}>05</option>
                                 <option value={20}>20</option>
-                                <option value={25}>25</option>
+                                <option value={60}>60</option>
+                                <option value="+5">+05</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="form-group col-sm-12">
+                            <select required={true} disabled={this.props.viewMode || false} value={this.state.numOfQuestions || 10} className="form-control" id="numOfQuestions" onChange={this.onQuizNumOfQuestionsChange}>
+                                <option value={0}>Select number of questions</option>
+                                <option value={this.state.numOfQuestions}>{this.state.numOfQuestions}</option>
+                                <option value={5}>05</option>
+                                <option value={10}>10</option>
+                                <option value={20}>20</option>
+                                <option value={30}>30</option>
+                                <option value={"+5"}>+5</option>
                             </select>
                         </div>
                     </div>
@@ -181,9 +208,9 @@ export default class QuizForm extends Component {
                                 <div className="form-group col-sm-12 text-left">
                                     {
                                         (this.state.subjects || []).map((val, index) => {
-                                            return (<div key={index} className="label label-info mr-2 pr-2 card">
+                                            return (<div key={index} className="d-inline-block ml-2">
                                                 <span>{val}</span>&nbsp;&nbsp;
-                                                <span value={val} role="button" onClick={()=>this.onSubjectRemove(val)} className="glyphicon glyphicon-remove"></span>
+                                               {!(this.props.viewMode||false)?( <span value={val} role="button" className="bg-icon" onClick={()=>this.onSubjectRemove(val)}>X</span>):('')}
                                             </div>)
                                         })
                                     }
@@ -201,9 +228,9 @@ export default class QuizForm extends Component {
                                 <div className="form-group col-sm-12 text-left">
                                     {
                                         (this.state.tags || []).map((val, index) => {
-                                            return (<div key={index} className="label label-info mr-2 pr-2 card">
+                                            return (<div key={index} className="d-inline-block ml-2">
                                                 <span>{val}&nbsp;&nbsp;</span>
-                                                <span value={val} role="button" onClick={()=>this.onTagRemove(val)} className="glyphicon glyphicon-remove"></span>
+                                                {!(this.props.viewMode||false)?(<span value={val} role="button" onClick={()=>this.onTagRemove(val)}>X</span>):('')}
                                             </div>)
                                         })
                                     }
@@ -213,7 +240,7 @@ export default class QuizForm extends Component {
                     <div className="row">
                         <div className="form-group col-sm-12">
                             <select required={true} disabled={this.props.viewMode || false} value={this.state.minLevel || 1} className="form-control" id="level" onChange={this.onFormQuizLevelChange}>
-                                <option value={null}>Select level</option>
+                                <option value={0}>Select level</option>
                                 <option value={1}>Easy</option>
                                 <option value={2}>Walking</option>
                                 <option value={3}>Medium</option>

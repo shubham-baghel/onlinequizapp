@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import QuizForm from './QuizForm';
 import QuestionService from '../../Services/QuizService/QuestionService';
-import { Redirect } from 'react-router-dom';
+import { Redirect,Router } from 'react-router-dom';
 var parse = require('url-parse');
 
 export default class QuizFormContainer extends Component {
@@ -15,20 +15,20 @@ export default class QuizFormContainer extends Component {
             viewMode: false,
             quizFomData: {},
             isMsg:false,
-            message:'',
-            query:{},
+            message:''
         }
-    }
-
-    componentWillMount(){
-        this.state.query=parse(this.props.location.search,true).query;
     }
 
     onHandleFormSubmit(quizFomData) {
     
         this.questionService.postQuiz(quizFomData).then(res => {
             console.log(res);
-            this.setState({isMsg:true,message:'Quiz added successfully.', viewMode: true, quizFomData: quizFomData });
+            var query=parse(this.props.location.search,true).query;
+            if(query.url && query.url!=null&& query.url!=''){
+                this.props.history.push(decodeURIComponent(query.url));
+            }else{
+                this.setState({isMsg:true,message:'Quiz added successfully.', viewMode: true, quizFomData: quizFomData });
+            }
         }).catch(err => {
                 console.log(err);
                 this.setState({isMsg:true,message:'Some error occured while adding quiz.', viewMode: false, quizFomData: quizFomData });
@@ -42,7 +42,6 @@ export default class QuizFormContainer extends Component {
     render() {
         return (
             <div className="container-fluid full-height-container">
-                { (this.state.viewMode && this.state.query.url && this.state.query.url)!=''?<Redirect to={decodeURIComponent(this.state.query.url)} />:('')}
                 <div className="row mb-2" >
                     <div className='col-sm-3'></div>
                     <div className="col-sm-6">

@@ -1,6 +1,6 @@
 .app-body{
   background-color:rgb(252, 252, 252);
-  min-height: 100vh;
+  min-height: 80vh;
 }
 
 html, body, #root, #App, main {
@@ -71,6 +71,10 @@ input[type="checkbox"]{
   100% {
     transform: rotate(0deg);
   }
+}
+
+.bg-icon{
+
 }
 
 .colorgraph {
