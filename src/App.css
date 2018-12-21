@@ -53,11 +53,17 @@ html, body, #root, #App, main {
 }
 
 input[type="checkbox"]{
-  width: 16px; /*Desired width*/
-  height: 16px; /*Desired height*/
+  width: 15px; /*Desired width*/
+  height: 15px; /*Desired height*/
   cursor: pointer;
 }
 
+.single-line-wrap{
+  overflow: hidden !important; 
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  margin: 1px !important;
+}
 @keyframes App-logo-spin {
   50% {
     transform: rotate(60deg);

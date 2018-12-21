@@ -138,9 +138,10 @@ export default class QuestionContainer extends Component {
                     <div className="col-sm-3 col-lg-3 col-xl-3 p-0 m-1">
                         <QuizStatus
                             QuizTimer={{
+                                quizInfo:this.props.quizInfo.quiz||{},
                                 allowTimer:this.props.allowTimer,
                                 startQuiz:this.props.startQuiz,
-                                quizDuration: this.props.quizDuration,
+                                quizDuration:this.props.quizInfo.quizDuration||1,
                                 onQuizClockStart: this.onQuizClockStart,
                                 onQuizTimeOut:this.onQuizTimeOut
                             }}

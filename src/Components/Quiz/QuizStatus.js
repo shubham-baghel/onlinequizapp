@@ -56,7 +56,7 @@ export default class QuizStatus extends Component {
         return (
             <div className="card">
                 <div className="card-body">
-                    <h4 className="card-title">Quiz-001</h4>
+                    <h4 className="card-title">{this.props.QuizTimer.quizInfo.name||"Quiz"}</h4>
                     {
                         this.props.QuizTimer.allowTimer?
                             (<label className= {"card-title label "+(this.state.secondsRemainingTotal<30?"label-danger":"label-warning")}>

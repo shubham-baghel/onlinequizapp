@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import QuestionService from '../../../Services/QuizService/QuestionService';
 import { Link } from 'react-router-dom';
 import '../../Common/Utility';
+import {ATTEMPT_MODE} from '../../../AppConstant';
 
 export default class QuestionsView extends Component {
     constructor(props) {
@@ -108,7 +109,9 @@ export default class QuestionsView extends Component {
                             <div className="alert alert-info btn-sm">Quick Links</div>
                             <hr />
                             <div className="container-fluid text-left">
-                                <div> <Link className="App-link" to="/quiz/add"><span>Add Quiz</span></Link></div>
+                                <div> <Link className="App-link" to={"/quiz?am="+ATTEMPT_MODE.VIEW+"&qz_id="+this.props.match.params._quiz_id}><span>Quiz View</span></Link></div>
+                                <div> <Link className="App-link" to={"/quiz?am="+ATTEMPT_MODE.ASSESS+"&qz_id="+this.props.match.params._quiz_id}><span>Quiz Test</span></Link></div>
+                                <div> <Link className="App-link" to={"/quiz/add?url="+encodeURIComponent(window.location.pathname)}><span>Add Quiz</span></Link></div>
                                 <div> <Link className="App-link" to={"/q/add?url="+encodeURIComponent(window.location.pathname)}><span>Add Question</span></Link></div>
                             </div>
                             <hr />
@@ -121,7 +124,7 @@ export default class QuestionsView extends Component {
                                 {
                                     (this.state.questionsList || []).map((q, index) => {
                                         return (<div key={index}>
-                                            <div className="m-2"><input id={"map"+index} type="checkbox" onChange={(e) => this.onSelectQuestion(e, q._id , true)}></input> <span className="alert"> {q.question}</span></div>
+                                            <div className="m-2" className="single-line-wrap" title={q.question}><input id={"map"+index} type="checkbox" onChange={(e) => this.onSelectQuestion(e, q._id , true)}></input> <span className="alert"> {q.question}</span></div>
                                         </div>)
                                     })
                                 }
@@ -140,7 +143,7 @@ export default class QuestionsView extends Component {
                                 {
                                     (this.state.questionsListMapped || []).map((q, index) => {
                                         return (<div key={index}>
-                                            <div className="m-2"><input id={"unmap"+index} type="checkbox" onChange={(e) => this.onSelectQuestion(e, q._id, false)}></input> <span className="alert"> {q.question}</span></div>
+                                            <div className="m-2" className="single-line-wrap" title={q.question}><input id={"unmap"+index} type="checkbox" onChange={(e) => this.onSelectQuestion(e, q._id, false)}></input> <span className="alert"> {q.question}</span></div>
                                         </div>)
                                     })
                                 }

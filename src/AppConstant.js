@@ -10,3 +10,8 @@ export const QUIZ_MODE={
     REVIEW:"review",
     SUBMIT:"submit"
 }
+
+export const ATTEMPT_MODE={
+    VIEW:"view",
+    ASSESS:"assess"
+}
