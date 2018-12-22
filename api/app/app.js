@@ -10,8 +10,10 @@ var db = require('./db/db');
 var QuestionController = require('./routes/controllers/QuestionController');
 var AccountController = require('./routes/controllers/AccountController');
 var QuizController = require('./routes/controllers/QuizController');
+var TagsController=require('./routes/controllers/TagsController');
 app.use('/api/questions', QuestionController);
 app.use('/api/account', AccountController);
 app.use('/api/quizes', QuizController);
+app.use('/api/tags',TagsController);
 
 module.exports=app;
