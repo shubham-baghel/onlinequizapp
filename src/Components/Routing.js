@@ -9,6 +9,7 @@ import SignIn from './Account/SingIn';
 import QuizFormContainer from './Forms/QuizFormContainer'
 import UserDashboard from './Panel/User/UserDashborad';
 import QuestionsView from './Panel/User/QuizMapping';
+import withAuth from './Shared/withAuth';
 
 class Routing extends Component {
     render(){
@@ -17,11 +18,11 @@ class Routing extends Component {
                 <Switch>
                     <Route exact path='/' component={Home} />
                     <Route exact path='/quiz' component={QuizContainer} />
-                    <Route path='/q/add' component={QuestionFormContainer}/>
+                    <Route path='/q/add' component={withAuth(QuestionFormContainer)}/>
                     <Route exact path='/quiz/review' component= {RevisitForm} />
                     <Route path='/visitorQuiz' component= {QuizLaunchByVisitor} />
-                    <Route path='/quiz/add' component={QuizFormContainer}/>
-                    <Route path='/user_dashboard' component={UserDashboard}/>
+                    <Route path='/quiz/add' component={withAuth(QuizFormContainer)}/>
+                    <Route path='/user_dashboard' component={withAuth(UserDashboard)}/>
                     <Route path='/q/show/:_quiz_id?' component={QuestionsView}/>
                     <Redirect to="/" />             
                 </Switch>
