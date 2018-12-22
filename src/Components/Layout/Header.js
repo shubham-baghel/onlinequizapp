@@ -6,6 +6,7 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.authService = new AuthService();
+        this.signOut = this.signOut.bind(this);
     }
 
     signOut() {
@@ -30,7 +31,7 @@ class Header extends Component {
                                 <Link className="nav-link App-link" to="/user_dashboard">Dashboard</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link App-link" title="logout" to="/">Logout</Link>
+                                <a className="nav-link App-link" onClick={this.signOut} href="/">Logout</a>
                             </li>
                         </ul>
                     </div>

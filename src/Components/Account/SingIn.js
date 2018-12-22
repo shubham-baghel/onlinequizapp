@@ -48,6 +48,10 @@ export default class SignIn extends Component {
               <form className="form-signin" onSubmit={this.handleSubmit}>
                 <div className="row">
                   <div className="m-0 form-group text-center col-lg-12">
+                  <Link className="navbar-brand App-logo" to="/"><big>Quiz</big></Link>
+                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
                     <h2>Sign In <small>Let's be in.</small></h2>
                     <hr className="colorgraph" />
                   </div>

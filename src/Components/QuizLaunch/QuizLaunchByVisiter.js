@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import withAuth from '../Shared/withAuth';
 
 
 class QuizLaunchByVisitor extends Component {
@@ -104,4 +103,4 @@ class QuizLaunchByVisitor extends Component {
     }
 }
 
-export default withAuth(QuizLaunchByVisitor);
+export default QuizLaunchByVisitor;
