@@ -12,6 +12,7 @@ export default class QuestionsView extends Component {
         this.onMapUnMapQuestions=this.onMapUnMapQuestions.bind(this);
         this.storeQuizMapping=this.storeQuizMapping.bind(this);
         this.onDeleteQuestions=this.onDeleteQuestions.bind(this);
+        this.onSelectAllQuestion=this.onSelectAllQuestion.bind(this);
 
         this.initializeState(true);
     }
@@ -44,6 +45,7 @@ export default class QuestionsView extends Component {
             })
             .catch(err => {
                 console.log(err);
+                alert("some error occured while getting Questions");
             });
 
         this.setState({ loadingdetail: true })
@@ -54,6 +56,7 @@ export default class QuestionsView extends Component {
             })
             .catch(err => {
                 console.log(err);
+                alert("some error occured while getting Quiz detail.");
             });
     }
 
@@ -65,9 +68,11 @@ export default class QuestionsView extends Component {
         this.questionService.saveQuizMapping(mappingData)
             .then(mapped => {
                 console.log(mapped);
+                alert("mapping saved successfully.");
             })
             .catch(err => {
                 console.log(err);
+                alert("some error occurred while saving mappings.");
             });
     }
 
@@ -83,6 +88,7 @@ export default class QuestionsView extends Component {
             })
             .catch(err => {
                 console.log(err);
+                alert("some error occurred while deleting questions.");
             });
         } 
     }
@@ -105,6 +111,10 @@ export default class QuestionsView extends Component {
             }
             this.setState({questionToUnMap:t});
         }
+    }
+
+    onSelectAllQuestion(e){
+       
     }
 
     onMapUnMapQuestions(map){
@@ -143,14 +153,14 @@ export default class QuestionsView extends Component {
                             <hr />
                         </div>
                         <div className='col-sm-4'>
-                            <div className="alert alert-info btn-sm">Available Questions</div>
+                            <div className="alert alert-info btn-sm" >Available Questions</div>
                             <hr />
                             <div className="container-fluid text-left">
                                 { (this.state.questionsList || []).length==0?(<div className="text-center">No Questions Available to map</div>):('')}
                                 {
                                     (this.state.questionsList || []).map((q, index) => {
                                         return (<div key={index}>
-                                            <div className="m-2" className="single-line-wrap" title={q.question}><input id={"map"+index} type="checkbox" onChange={(e) => this.onSelectQuestion(e, q._id , true)}></input> <span className="alert"> {q.question}</span></div>
+                                            <div className="m-2" className="single-line-wrap" title={q.question}><input className="map-question-checkbox" id={"map"+index} type="checkbox" onChange={(e) => this.onSelectQuestion(e, q._id , true)}></input> <span className="alert"> {q.question}</span></div>
                                         </div>)
                                     })
                                 }
@@ -180,7 +190,7 @@ export default class QuestionsView extends Component {
                                     (this.state.questionsListMapped || []).length > 0 ?
                                         (<div>
                                              <button onClick={()=>this.onMapUnMapQuestions(false)} disabled={this.state.questionToUnMap.length==0} className="btn btn-sm btn-info col-sm-5 m-2">Revert</button>
-                                             <button onClick={this.storeQuizMapping} className="btn btn-sm btn-info col-sm-5 m-2">Store</button>
+                                             <button onClick={this.storeQuizMapping} className="btn btn-sm btn-info col-sm-5 m-2">Save</button>
                                         </div>) : ('')
                                 }
                             </div>
