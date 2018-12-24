@@ -102,16 +102,19 @@ export default class QuizForm extends Component {
     }
 
     onFormInputSubjectChange(e) {
-        let sval = e.target.value;
-        sval = (sval || "").trim();
-        if (sval != "" && sval.toLowerCase()!="Select Subject") {
-            let subjects = Object.assign(this.state.subjects || []);
-            if (subjects.filter((s) =>
-                s.trim().toLowerCase() == sval.toLowerCase()).length == 0) {
-                subjects.push(sval);
-                this.setState({ subjects: subjects });
+        if (e.key == "Enter" || e.key == " ") {
+            let sval = e.target.value;
+            sval = (sval || "").trim();
+            if (sval != "") {
+                let subjects = Object.assign(this.state.subjects || []);
+                if (subjects.filter((s) =>
+                    s.trim().toLowerCase() == sval.toLowerCase()).length == 0) {
+                        subjects.push(sval);
+                    this.setState({ subjects: subjects });
+                }
+                e.currentTarget.value = "";
+                e.preventDefault();
             }
-            e.currentTarget.value = "Select Subject";
         }
     }
 
@@ -144,7 +147,6 @@ export default class QuizForm extends Component {
     }
 
     render() {
-        const defaultSubjects=['Select Subject','General','Physics','Chemistry','Mathematics']
         return (
             <div className="container-fluid">
                 <div>
@@ -154,7 +156,7 @@ export default class QuizForm extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <div className="row">
                         <div className="form-group col-sm-12">
-                            <input type="text" disabled={this.props.viewMode || false} required={true} onChange={this.onFormQuizNameChange} className="form-control" id="QuizName" value={this.state.name} placeholder="Quiz Name" />
+                            <input autoComplete="off" type="text" disabled={this.props.viewMode || false} required={true} onChange={this.onFormQuizNameChange} className="form-control" id="QuizName" value={this.state.name} placeholder="Quiz Name" />
                         </div>
                     </div>
                     <div className="row">
@@ -193,13 +195,7 @@ export default class QuizForm extends Component {
                     </div>
                     <div className="row">
                         <div className="form-group  col-sm-12">
-                        <select required={true} disabled={this.props.viewMode || false} className="form-control" id="subject" onChange={this.onFormInputSubjectChange}>
-                                {
-                                    defaultSubjects.map((val,index)=>{
-                                        return (<option key={index} value={val}>{val}</option>)
-                                    })
-                                }
-                            </select>
+                            <input autoComplete="off" disabled={this.props.viewMode || false} onKeyPress={this.onFormInputSubjectChange} className="form-control" id="subject" placeholder="Enter subjects here" />
                         </div>
                     </div>
                     {
@@ -219,7 +215,7 @@ export default class QuizForm extends Component {
                     }
                     <div className="row">
                         <div className="form-group col-sm-12">
-                            <input disabled={this.props.viewMode || false} onKeyPress={this.onFormInputTagChange} className="form-control" id="tags" placeholder="Enter tags here" />
+                            <input autoComplete="off" disabled={this.props.viewMode || false} onKeyPress={this.onFormInputTagChange} className="form-control" id="tags" placeholder="Enter tags here" />
                         </div>
                     </div>
                     {

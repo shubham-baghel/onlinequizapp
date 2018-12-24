@@ -126,16 +126,19 @@ export default class QuestionForm extends Component {
     }
 
     onFormInputSubjectChange(e) {
-        let sval = e.target.value;
-        sval = (sval || "").trim();
-        if (sval != "" && sval.toLowerCase()!="Select") {
-            let subjects = Object.assign(this.state.subjects || []);
-            if (subjects.filter((s) =>
-                s.trim().toLowerCase() == sval.toLowerCase()).length == 0) {
-                subjects.push(sval);
-                this.setState({ subjects: subjects });
+        if (e.key == "Enter" || e.key == " ") {
+            let sval = e.target.value;
+            sval = (sval || "").trim();
+            if (sval != "") {
+                let subjects = Object.assign(this.state.subjects || []);
+                if (subjects.filter((s) =>
+                    s.trim().toLowerCase() == sval.toLowerCase()).length == 0) {
+                        subjects.push(sval);
+                    this.setState({ subjects: subjects });
+                }
+                e.currentTarget.value = "";
+                e.preventDefault();
             }
-            e.currentTarget.value = "Select";
         }
     }
 
@@ -183,50 +186,50 @@ export default class QuestionForm extends Component {
     render() {
         return (
             <div className="container-fluid">
-                <div className="">
-                    <h3>Add Question <small> provide question details</small></h3>
-                    <hr className=" colorgraph"></hr>
+                <div className="form-group row">
+                        <div className="col-sm-1"></div>
+                        <div className="col-sm-10">
+                             <h3>Add Question <small> provide question details</small></h3>
+                             <hr className="colorgraph"></hr>
+                        </div>
                 </div>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group row">
                         <div className="col-sm-1"></div>
                         <div className="col-sm-10">
-                            <textarea disabled={this.props.viewMode || false} required={true} onChange={this.onFormInputQuestionChange} className="form-control" id="question" value={this.state.question} placeholder="Enter question here" />
+                            <textarea autoComplete="off" disabled={this.props.viewMode || false} required={true} onChange={this.onFormInputQuestionChange} className="form-control" id="question" value={this.state.question} placeholder="Enter question here" />
                         </div>
                     </div>
                     {
                         this.state.options.map((val, index) => {
                             return (
-                                <div className="form-group row d-table-row" key={index + 1}>
-                                    <div className="col-sm-1 d-table-cell float-left ml-0 mr-0 pl-0 pr-0">
+                                <div className="form-group row" key={index + 1}>
+                                    <div className="col-sm-1">
+                                        
+                                    </div>
+                                    <div className="col-sm-10 d-inline-flex">
                                         {
                                             index == this.state.minoptions - 1 ?
-                                                (<button disabled={this.props.viewMode || false} title="add more options" type="button" className="btn btn-info" onClick={() => this.onAddMoreOption(this.state.options.length + 1)}>
-                                                    <span className="" aria-hidden="true">+</span></button>)
+                                                (<button disabled={this.props.viewMode || false} title="add more options" type="button" className="smooth" onClick={() => this.onAddMoreOption(this.state.options.length + 1)}>
+                                                    +</button>)
                                                 : ('')
 
                                         }
                                         {
                                             index > this.state.minoptions - 1 ?
-                                                (<button disabled={this.props.viewMode || false} title="remove this option" type="button" className="btn btn-info" onClick={() => this.onRemoveOption(index + 1)}>
-                                                    <span className="" aria-hidden="true">-</span></button>)
+                                                (<button disabled={this.props.viewMode || false} title="remove this option" type="button" className="smooth" onClick={() => this.onRemoveOption(index + 1)}>
+                                                    -</button>)
                                                 : ('')
 
                                         }
-                                    </div>
-                                    <div className="col-sm-10 d-table-cell mr-0 pr-0">
-                                        <input disabled={this.props.viewMode || false} required={true} value={val.o} onChange={(e) => this.onFormInputOptionChange(e, index + 1)} type="text" className="form-control" id={"option" + index + 1} placeholder={"Enter option"+(index + 1)+" here"} />
-                                    </div>
-                                    <div className="col-sm-1 d-table-cell">
+                                        <input autoComplete="off" disabled={this.props.viewMode || false} required={true} value={val.o} onChange={(e) => this.onFormInputOptionChange(e, index + 1)} type="text" className="form-control ml-2 mr-2" id={"option" + index + 1} placeholder={"Enter option "+(index + 1)+" here"} />
                                         {
                                             this.state.answers.filter((op) => op.id == val.id).length > 0 ?
-                                                (<button disabled={this.props.viewMode || false} type="button" className="btn  btn-info" onClick={() => this.onMarkAnswer(index + 1, false)}>
-                                                    <span className="" aria-hidden="true">o</span>
-                                                </button>) :
-                                                (<button disabled={(this.props.viewMode || false) || val.o == ""} type="button" className="btn  btn-dark" onClick={() => this.onMarkAnswer(index + 1, true)}>
-                                                    <span className="" aria-hidden="true">o</span>
-                                                </button>)
+                                                (<input checked={true} disabled={this.props.viewMode || false} type="checkbox" className="big" onClick={() => this.onMarkAnswer(index + 1, false)}/> ) :
+                                                (<input disabled={(this.props.viewMode || false) || val.o == ""} type="checkbox" className="big" onClick={() => this.onMarkAnswer(index + 1, true)}/>)
                                         }
+                                    </div>
+                                    <div className="col-sm-1">
                                     </div>
                                 </div>
                             )
@@ -235,12 +238,7 @@ export default class QuestionForm extends Component {
                     <div className="form-group row mt-3">
                         <div className="col-sm-1"></div>
                         <div className="col-sm-10">
-                        <select required={true} value="General" disabled={this.props.viewMode || false} className="form-control" id="subject" onChange={this.onFormInputSubjectChange}>
-                                <option value={"General"}>Select subjects</option>
-                                <option value={"Politics"}>Politics</option>
-                                <option value={"Mathematics"}>Mathematics</option>
-                                <option value={"Arts"}>Arts</option>
-                            </select>
+                             <input autoComplete="off" disabled={this.props.viewMode || false} onKeyPress={this.onFormInputSubjectChange} className="form-control" id="subject" placeholder="Enter subjects here" />
                         </div>
                     </div>
                     {
@@ -262,7 +260,7 @@ export default class QuestionForm extends Component {
                     <div className="form-group row">
                         <div className="col-sm-1"></div>
                         <div className="col-sm-10">
-                            <input disabled={this.props.viewMode || false} onKeyPress={this.onFormInputTagChange} className="form-control" id="tags" placeholder="Enter tags here" />
+                            <input autoComplete="off" disabled={this.props.viewMode || false} onKeyPress={this.onFormInputTagChange} className="form-control" id="tags" placeholder="Enter tags here" />
                         </div>
                     </div>
                     {
@@ -318,7 +316,12 @@ export default class QuestionForm extends Component {
                             </div>) : ''
                     }
                     {this.state.isError = false}
-                    <div className=""><hr className="colorgraph"></hr></div>
+                    <div className="form-group row">
+                        <div className="col-sm-1"></div>
+                        <div className="col-sm-10">
+                             <hr className="colorgraph"></hr>
+                        </div>
+                     </div>
                     <div className="form-group row">
                          <div className="col-sm-1"></div>
                          <div className="col-sm-10">

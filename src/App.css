@@ -53,10 +53,28 @@ html, body, #root, #App, main {
 }
 
 input[type="checkbox"]{
-  width: 15px; /*Desired width*/
-  height: 15px; /*Desired height*/
+  width: 10%; /*Desired width*/
+  height: 10%; /*Desired height*/
   cursor: pointer;
+  align-self: center;
 }
+
+input[type="checkbox"].big{
+  width: 20px; /*Desired width*/
+  height: 20px; /*Desired height*/
+  cursor: pointer;
+  align-self: center;
+}
+
+button.smooth{
+  width: 30px; /*Desired width*/
+  height: 30px; /*Desired height*/
+  cursor: pointer;
+  align-self: center;
+  border: #147e9b;
+  border-radius: 100%;
+}
+
 
 .single-line-wrap{
   overflow: hidden !important; 
