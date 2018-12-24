@@ -20,12 +20,12 @@ export default class QuizFormContainer extends Component {
     }
 
     onHandleFormSubmit(quizFomData) {
-    
+        let props=this.props;
         this.questionService.postQuiz(quizFomData).then(res => {
             console.log(res);
-            var query=parse(this.props.location.search,true).query;
+            var query=parse(props.history.location.search,true).query;
             if(query.url && query.url!=null&& query.url!=''){
-                this.props.history.push(decodeURIComponent(query.url));
+                props.history.push(decodeURIComponent(query.url));
             }else{
                 this.setState({isMsg:true,message:'Quiz added successfully.', viewMode: true, quizFomData: quizFomData });
             }

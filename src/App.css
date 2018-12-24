@@ -53,8 +53,8 @@ html, body, #root, #App, main {
 }
 
 input[type="checkbox"]{
-  width: 10%; /*Desired width*/
-  height: 10%; /*Desired height*/
+  width: 15px; /*Desired width*/
+  height: 15px; /*Desired height*/
   cursor: pointer;
   align-self: center;
 }
