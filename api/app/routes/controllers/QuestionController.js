@@ -1,7 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var models = require('../../db/models/Question');
-var QuizQuestionMappingModel= require('../../db/models/QQMapping');
+var qqModel= require('../../db/models/QQMapping');
+var QuizQuestionMappingModel=qqModel.QuizQuestionMappingModel;
 var Question = models.QuestionModel;
 var Option = models.OptionModel;
 
@@ -104,5 +105,21 @@ router.post('/st', function (req, res) {
             res.status(200).send(questions);
         });
 });
+
+//Delete Questions by question id 
+router.post('/delete', function (req, res) 
+{
+    let q_ids=(req.body.q_ids||[]);
+    QuizQuestionMappingModel.update({},{$pull:{questions_ids:{$in:q_ids}}},{ multi: true },
+        function(err, mappings){
+           if (err) return res.status(500).send("Error :"+JSON.stringify(err));
+           //Delete all questions now
+           Question.remove({ _id:{ $in:q_ids }}, 
+            function (err, questions) {
+                if (err) return res.status(500).send("Error :"+JSON.stringify(err));
+                res.status(200).send(questions);
+            });
+        });
+    });
 
 module.exports = router;

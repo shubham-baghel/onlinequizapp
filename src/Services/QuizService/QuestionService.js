@@ -34,6 +34,15 @@ export default class QuestionService {
         });
     }
 
+    deleteQuestions(q_ids) {
+        let user=this.loggedInUser;
+        return request({
+            url : `/api/questions/delete` ,
+            method : 'POST',
+            data : {q_ids: q_ids,modifiedBy:user}
+        });
+    }
+
     getQuizByUser(userId) {
         userId=userId||this.loggedInUser;
         return request({

@@ -11,8 +11,13 @@ export default class QuestionsView extends Component {
         this.onSelectQuestion = this.onSelectQuestion.bind(this);
         this.onMapUnMapQuestions=this.onMapUnMapQuestions.bind(this);
         this.storeQuizMapping=this.storeQuizMapping.bind(this);
+        this.onDeleteQuestions=this.onDeleteQuestions.bind(this);
 
-        this.state = {
+        this.initializeState(true);
+    }
+
+    initializeState(initial){
+        let state={
             loading: false,
             loadingdetail:false,
             questionsList: [],
@@ -21,6 +26,11 @@ export default class QuestionsView extends Component {
             questionToUnMap: [],
             quizDetail:{},
             urlPath:{}
+        };
+        if(initial){
+            this.state = state;
+        }else{
+            this.setState(state);
         }
     }
 
@@ -59,6 +69,22 @@ export default class QuestionsView extends Component {
             .catch(err => {
                 console.log(err);
             });
+    }
+
+    onDeleteQuestions(e){
+        e.preventDefault();
+        if (window.confirm("Are you sure? you want to delete Questions and it's Mappings.")) {
+            this.questionService.deleteQuestions(this.state.questionToMap)
+            .then(res => {
+                console.log(res);
+                this.setState({questionToMap:[]});
+                this.initializeState(false);
+                this.componentWillMount();
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        } 
     }
 
     onSelectQuestion(e, id, map) {
@@ -130,7 +156,10 @@ export default class QuestionsView extends Component {
                                 }
                                 {
                                     (this.state.questionsList || []).length > 0 ?
-                                        (<div><button onClick={()=>this.onMapUnMapQuestions(true)} disabled={this.state.questionToMap.length==0} className="btn btn-sm btn-info col-sm-5 m-2">Map</button></div>) : ('')
+                                        (<div>
+                                            <button onClick={()=>this.onMapUnMapQuestions(true)} disabled={this.state.questionToMap.length==0} className="btn btn-sm btn-info col-sm-5 m-2">Map</button>
+                                            <button onClick={this.onDeleteQuestions} disabled={this.state.questionToMap.length==0} className="btn btn-sm btn-info col-sm-5 m-2">Delete</button>
+                                        </div>) : ('')
                                 }
                             </div>
                             <hr />
