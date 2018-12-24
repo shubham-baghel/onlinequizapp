@@ -23,6 +23,14 @@ class Header extends Component {
                     </button>
 
                     <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                        <form class="form-inline my-2 my-lg-0 d-inline-flex">
+                            <div>
+                                <input className="form-control mr-sm-2" type="search" placeholder="Token here" aria-label="Search"/>
+                            </div>
+                            <div>
+                                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Let's Go</button>
+                            </div>
+                        </form>
                         <ul className="navbar-nav">
                             <li className="nav-item">
                                 <Link className="nav-link App-link" to="/quiz">Quiz</Link>
