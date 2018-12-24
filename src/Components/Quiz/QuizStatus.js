@@ -59,7 +59,7 @@ export default class QuizStatus extends Component {
                     <h4 className="card-title">{this.props.QuizTimer.quizInfo.name||"Quiz"}</h4>
                     {
                         this.props.QuizTimer.allowTimer?
-                            (<label className= {"card-title label "+(this.state.secondsRemainingTotal<30?"label-danger":"label-warning")}>
+                            (<label className= {"card-title alert btn-sm "+(this.state.secondsRemainingTotal<30?"alert-danger":"alert-info")}>
                             {FormatNumberLength(this.state.minutesRemaining,2)}:
                             {FormatNumberLength(this.state.secondsRemaining,2)} /&nbsp;
                             {FormatNumberLength(this.props.QuizTimer.quizDuration,2)}:00

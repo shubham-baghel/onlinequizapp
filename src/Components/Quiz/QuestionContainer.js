@@ -115,23 +115,25 @@ export default class QuestionContainer extends Component {
                 <div className="col-sm-1 col-lg-1 col-xl-1"></div>
                     <div className="col-sm-7 col-lg-7 col-xl-7 card m-1">
                         <div className="row mt-2">
-                            <div className="col-sm-10 col-lg-10 col-xl-10 p-0 pb-120 ml-1 mr-1">
+                            <div className="col-sm-1 col-lg-1 col-xl-1"></div>
+                            <div className="col-sm-10 col-lg-10 col-xl-10">
                                 <QuestionCard
                                     responses={this.state.userResponses[this.state.index] || []}
                                     question={this.state.currentQuestion}
                                     onOptionSelect={this.onOptionSelect} />
                             </div>
                         </div>
-                        <div className="row mt-2 mb-4 align-parent-bottom">
-                            <div className="col-sm-5 col-lg-5 col-xl-5 m-1">
-                                <PreviousButton onHandleClick={this.state.index > 0 ? this.handlePrevClick : () => { }} />
-                            </div>
-                            <div className="col-sm-5 col-lg-5 col-xl-5 m-1">
-                                {
+                        <div className="row mb-2">
+                            <div className="col-sm-1 col-lg-1 col-xl-1"></div>
+                            <div className="col-sm-10 col-lg-10 col-xl-10">
+                                <ul className="pager">
+                                    <li className="previous"><a onClick={this.state.index > 0 ? this.handlePrevClick : () => { }} href="#">Previous</a></li>
+                                    {
                                     this.state.index < this.props.quizData.length - 1 ?
-                                        (<NextButton onHandleClick={this.handleNextClick} />) :
-                                        (<FinishButton onHandleClick={this.handleFinishClick} />)
-                                }
+                                        ( <li className="next"><a onClick={this.handleNextClick} href="#">Next</a></li>) :
+                                        ( <li className="next"><a onClick={this.handleFinishClick} href="#">Finish</a></li>)
+                                    }
+                                </ul>
                             </div>
                         </div>
                     </div>
