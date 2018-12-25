@@ -6,6 +6,7 @@ import NextButton from './NextButton';
 import FinishButton from './FinishButton';
 import QuizStatus from './QuizStatus';
 import { throws } from 'assert';
+import { FormatNumberLength } from '../Common/Utility';
 
 export default class QuestionContainer extends Component {
 
@@ -127,11 +128,12 @@ export default class QuestionContainer extends Component {
                             <div className="col-sm-1 col-lg-1 col-xl-1"></div>
                             <div className="col-sm-10 col-lg-10 col-xl-10">
                                 <ul className="pager">
-                                    <li className="previous"><a onClick={this.state.index > 0 ? this.handlePrevClick : () => { }} href="#">Previous</a></li>
+                                    <li className="previous btn-sm"><a onClick={this.state.index > 0 ? this.handlePrevClick : () => { }} href="#">Previous</a></li>
+                                    <li><a className="btn-sm">{FormatNumberLength(this.state.index + 1, 2)} / {FormatNumberLength(this.props.quizData.length, 2)}</a></li>
                                     {
                                     this.state.index < this.props.quizData.length - 1 ?
-                                        ( <li className="next"><a onClick={this.handleNextClick} href="#">Next</a></li>) :
-                                        ( <li className="next"><a onClick={this.handleFinishClick} href="#">Finish</a></li>)
+                                        ( <li className="next btn-sm"><a onClick={this.handleNextClick} href="#">Next</a></li>) :
+                                        ( <li className="next btn-sm"><a onClick={this.handleFinishClick} href="#">Finish</a></li>)
                                     }
                                 </ul>
                             </div>

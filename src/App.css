@@ -8,7 +8,7 @@ html, body, #root, #App, main {
 }
 
 .full-height-container{
-  min-height: 85vh !important;
+  min-height: 80vh !important;
   font-size: 1.2rem;
   font-weight: 300;
 }
@@ -31,10 +31,10 @@ html, body, #root, #App, main {
 
 .App-Footer {
   background-color: #e9eef0;
-  min-height: 10vh;
+  min-height: 9vh;
   justify-content: center;
   margin-top: 1vh;
-  padding-top: 2vh;
+  padding-top: 1vh;
 }
 
 .App-link {

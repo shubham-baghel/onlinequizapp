@@ -79,14 +79,7 @@ export default class QuizStatus extends Component {
                 </div>
                 <div className="card-body">
                     <h4 className="card-title">{FormatNumberLength(this.props.currentIndex + 1, 2)} / {FormatNumberLength(this.props.quizData.length, 2)}</h4>
-                    <div className="card-text">
-                        <div className='m-0'>
-                            <label className="alert alert-info col-sm">Not Attempted</label>
-                        </div>
-                        <div className='m-0'>
-                            <label className="alert alert-success col-sm">Attempted</label>
-                        </div>
-                    </div>
+                    <div className="card-text">&nbsp;</div>
                 </div>
             </div>
         );
