@@ -47,6 +47,7 @@ export default class UserDashboard extends Component {
     }
 
     render() {
+        let qObject=this.state.quizList[this.state.clicked];
         return (
             <div className="container-fluid full-height-container">
                 {this.state.loading ? (<div>loading...</div>) :
@@ -60,10 +61,10 @@ export default class UserDashboard extends Component {
                                 <div> <Link className="App-link" to={"/q/add?url=" + encodeURIComponent(window.location.pathname)}><span>Add Question</span></Link></div>
                                 {
                                     (this.state.quizList || []).length>0?(
-                                        <div className="alert single-line-wrap">Selected: <span>{this.state.quizList[this.state.clicked].name}</span>
-                                        <div > <Link className="App-link" to={"/q/show/" + this.state.quizList[this.state.clicked]._id}><span>map questions</span></Link></div>
+                                        <div className="alert single-line-wrap">Selected: <span>{qObject.name}</span>
+                                        <div > <Link className="App-link" to={"/q/show/" + qObject._id}><span>map questions</span></Link></div>
                                         <div> <Link className="App-link" to="/"><span>modify quiz</span></Link></div>
-                                        <div> <a href="/" className="App-link"><span onClick={(e)=>this.deleteQuiz(e,this.state.quizList[this.state.clicked]._id)}>delete quiz</span></a></div>
+                                        <div> <a href="/" className="App-link"><span onClick={(e)=>this.deleteQuiz(e,qObject._id)}>delete quiz</span></a></div>
                                     </div>
                                     ):('')
                                 }
@@ -94,20 +95,16 @@ export default class UserDashboard extends Component {
                                 this.state.quizList.length == 0 ? ('No Quiesz are added.') :
                                     (
                                         <div>
-                                            <div className="container-fluid text-left">
-                                                <div>Quiz Name - {this.state.quizList[this.state.clicked].name}</div>
-                                                <div>Quiz Mode - {this.state.quizList[this.state.clicked].quizMode}</div>
-                                                <div>Quiz Duration - {this.state.quizList[this.state.clicked].quizDuration}</div>
-                                                <div>No of Questions - {this.state.quizList[this.state.clicked].numOfQuestions}</div>
-                                                <div>Quiz Min Level - {this.state.quizList[this.state.clicked].minLevel}</div>
-                                                <div>Quiz Language - {this.state.quizList[this.state.clicked].language}</div>
-                                                <div>Quiz Subjects - {(this.state.quizList[this.state.clicked].subjects || []).join(', ')}</div>
-                                                <div>Quiz Tags - {(this.state.quizList[this.state.clicked].tags || []).join(', ')}</div>
-                                                <div>Modified On - {this.state.quizList[this.state.clicked].modifiedDate}</div>
-                                                <div>Modified By - {this.state.quizList[this.state.clicked].modifiedBy}</div>
-                                                <div>Created On - {this.state.quizList[this.state.clicked].createdDate}</div>
-                                                <div>Created By - {this.state.quizList[this.state.clicked].createdBy}</div>
-                                                <hr />
+                                            <div className="container-fluid">
+                                                {
+                                                    Object.keys(qObject).map(function(key, index) {
+                                                    return ((key=="_id"||key=="__v")?(''):
+                                                        <div  key={index}><div className="row text-left">
+                                                            <div className="col-sm-5"><span>{key}</span></div>
+                                                            <div className="col-sm-7"><span>{qObject[key]}</span></div>
+                                                        </div></div>)
+                                                     })
+                                                }
                                             </div>
                                         </div>
                                     )
